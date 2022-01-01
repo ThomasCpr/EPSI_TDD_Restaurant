@@ -1,24 +1,31 @@
 package Restaurant;
 
+import java.util.ArrayList;
 
 public class Franchise {
 	
 	// - - - - - Attributes - - - - - // 
 	
-	private Restaurant[] _restaurants;
+	private ArrayList<Restaurant> _restaurants;
 	
 	// - - - - - Constructors - - - - - //
-	
-	public Franchise(Restaurant[] restaurants) {
+	/**
+	 * Constructeur avec une liste de restaurant
+	 * @param restaurants
+	 */
+	public Franchise(ArrayList<Restaurant> restaurants) {
 		super();
 		this._restaurants = restaurants;
 	}
-	
-	public Franchise(int nombreRestaurants, int nombreServeurs) {
+	/**
+	 * Constructeur avec un nombre de restaurant
+	 * @param nombreRestaurants
+	 */
+	public Franchise(int nombreRestaurants) {
 		super();
-		_restaurants = new Restaurant[nombreRestaurants];
+		_restaurants = new ArrayList<Restaurant>();
 		for(int i = 0; i < nombreRestaurants; i++) {
-			_restaurants[i] = new Restaurant(nombreServeurs);
+			_restaurants.add(new Restaurant());
 		}
 	}
 	
@@ -37,14 +44,12 @@ public class Franchise {
 		}
 		return som;
 	}
-
-	public Restaurant[] get_restaurants() {
+	public ArrayList<Restaurant> get_restaurants() {
 		return _restaurants;
 	}
-
-	public void set_restaurants(Restaurant[] _restaurants) {
+	public void set_restaurants(ArrayList<Restaurant> _restaurants) {
 		this._restaurants = _restaurants;
 	}
-	
+
 	
 }

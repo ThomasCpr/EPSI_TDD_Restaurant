@@ -1,6 +1,6 @@
 package Restaurant;
 
-public class Serveur {
+public class Serveur extends Employe {
 	
 	// - - - - - Attributes - - - - - // 
 	
@@ -9,7 +9,7 @@ public class Serveur {
 	
 	// - - - - - Constructors - - - - - //
 	public Serveur() {
-		
+		super();
 	}
 	// - - - - - Methods - - - - - //
 	public void prendCommande(double montant) {
@@ -24,14 +24,10 @@ public class Serveur {
 		this.chiffreAffaire = chiffreAffaire;
 	}
 
-	@Override
-	public String toString() {
-		return "Serveur [chiffreAffaire=" + chiffreAffaire + ", getChiffreAffaire()=" + getChiffreAffaire()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
-	}
 
 	
-	
+	public void desassignerTableCarServiceTermine() {
+		desassignerTablesFinDeService();
+	}
 	
 }

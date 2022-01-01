@@ -1,38 +1,45 @@
 package Restaurant;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Restaurant {
 	
 	// - - - - - Attributes - - - - - //
-	private Serveur[] _serveurs;
-	private Table[] _tables;
+	private ArrayList<Serveur> _serveurs;
+ 	private ArrayList<Table> _tables;
+	
+ 	// Arbitrairement on choisit que le service n'ai pas commencé lors de l'instanciation d'un restaurant
+	private boolean _serviceADebute = false;
+	private boolean _serviceEstFini = true;
+	private MaitreHotel _maitreHotel;
+	
+	
 	// - - - - - Constructors - - - - - //
 	
 	public Restaurant() {
-		
+		_maitreHotel = new MaitreHotel();
+		 _serveurs = new ArrayList<Serveur>();
+		 _tables = new ArrayList<Table>();
 	}
 	
-	public Restaurant(int nombreServeur) {
-		_serveurs = new Serveur[nombreServeur];
-		for(int i = 0; i < nombreServeur; i++) {
-			_serveurs[i] = new Serveur();
-		}
-	}
-	
-	public Restaurant(int nombreServeur, int nbTable) {
-		_serveurs = new Serveur[nombreServeur]; // y 'avait pas un moyen de raccourcis ce code dupliqué ? 
-		for(int i = 0; i < nombreServeur; i++) {
-			_serveurs[i] = new Serveur();
-		}
-		
-		_tables = new Table[nbTable];
+	public Restaurant( int nbTable) { 
+		_serveurs = new ArrayList<Serveur>();
+		_tables = new ArrayList<Table>();
 		for(int j = 0; j<nbTable; j++) {
-			_tables[j] = new Table();
+			_tables.add(new Table());
 		}
+		_maitreHotel = new MaitreHotel(_tables);
 	}
-
 	
+//	public Restaurant( int nbTable, int nbServeur) { 
+//		_serveurs = new ArrayList<Serveur>();
+//		_tables = new ArrayList<Table>();
+//		for(int j = 0; j<nbTable; j++) {
+//			_tables.add(new Table());
+//		}
+//		_maitreHotel = new MaitreHotel(_tables);
+//	}
 	// - - - - - Methods - - - - - //
 	/**
 	 * chiffre d'affaire deu restaurant
@@ -47,22 +54,71 @@ public class Restaurant {
 		return som;
 	}
 
-	public Serveur[] get_serveurs() {
+	public ArrayList<Serveur> get_serveurs() {
 		return _serveurs;
 	}
-
-	public void set_serveurs(Serveur[] _serveurs) {
+	public void set_serveurs(ArrayList<Serveur> _serveurs) {
 		this._serveurs = _serveurs;
 	}
+	
 
-	@Override
-	public String toString() {
-		return "Restaurant [_serveurs=" + Arrays.toString(_serveurs) + ", chiffreAffaire()=" + chiffreAffaire()
-				+ ", get_serveurs()=" + Arrays.toString(get_serveurs()) + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+	public MaitreHotel get_maitreHotel() {
+		return _maitreHotel;
+	}
+
+	public void set_maitreHotel(MaitreHotel _maitreHotel) {
+		this._maitreHotel = _maitreHotel;
+	}
+
+	public void serviceCommence() {
+		System.out.println("- - - Service commence - - -");
+		_serviceADebute = true;
+		_serviceEstFini = false;
 	}
 	
+	public void serviceTermine() {
+		System.out.println("- - - Le service termine - - -");
+		_serviceADebute = false;
+		_serviceEstFini = true;
+		
+		// il faut desassigner toutes les tables des serveurs et les réassigner au maitre d'hôtel
+		System.out.println("Désaffectation des tables des  serveurs: START");
+		for(Serveur s : _serveurs) {
+			s.desassignerTableCarServiceTermine();
+		}
+		System.out.println("Désaffectation des tables des  serveurs: END");
+		
+		// et les réassigner au maitre d'hôtel
+		System.out.println("Réassignation au maitre d'hôtel: START");
+		System.out.println(_maitreHotel.nbTableAffectees());
+		_maitreHotel.assignerTablesCarMaitreHotel(_tables);
+		System.out.println(_maitreHotel.nbTableAffectees());
+		System.out.println("Réassignation au maitre d'hôtel: END");
+		System.out.println("- - - Service est terminé - - -");
+		
+	}
+
+	public ArrayList<Table> get_tables() {
+		return _tables;
+	}
+
+	public void set_tables(ArrayList<Table> _tables) {
+		this._tables = _tables;
+	}
 	
+	public void assignerTable(Employe e, Table t) {
+		// Est ce que l'emplyé est le maitre d'hôtel ? 
+		if(e.getClass().equals(_maitreHotel.getClass())) {
+			// OUI - alors on lui assigne la table
+			_maitreHotel.assignerTable(t);
+		}else {
+			// Non - est ce que le service a déjà débuté
+			// On l'assigne au serveur et on l'enlève des tables assignées au maitre d'hotel
+			e.assignerTable(t);
+			System.out.println("Désassignation de la table du maitre d'hôtel:");
+			_maitreHotel.desassignerUneTable(t);
+		}
+	}
 	
 }
 
