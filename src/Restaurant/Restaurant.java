@@ -83,8 +83,16 @@ public class Restaurant {
 		
 		// il faut desassigner toutes les tables des serveurs et les réassigner au maitre d'hôtel
 		System.out.println("Désaffectation des tables des  serveurs: START");
+		ArrayList<Table> taj= new ArrayList<Table>();
 		for(Serveur s : _serveurs) {
-			s.desassignerTableCarServiceTermine();
+			 taj = s.desassignerTableCarServiceTermine();
+		}
+		for(Table t: _tables) {
+			System.out.println(t);
+		}
+		System.out.println("Table à jour");
+		for(Table t: taj) {
+			System.out.println(t);
 		}
 		System.out.println("Désaffectation des tables des  serveurs: END");
 		
@@ -106,17 +114,22 @@ public class Restaurant {
 		this._tables = _tables;
 	}
 	
+	
 	public void assignerTable(Employe e, Table t) {
-		// Est ce que l'emplyé est le maitre d'hôtel ? 
+		// Est ce que l'employé est le maitre d'hôtel ? 
 		if(e.getClass().equals(_maitreHotel.getClass())) {
 			// OUI - alors on lui assigne la table
 			_maitreHotel.assignerTable(t);
 		}else {
 			// Non - est ce que le service a déjà débuté
-			// On l'assigne au serveur et on l'enlève des tables assignées au maitre d'hotel
+			// On l'assigne au serveur 
 			e.assignerTable(t);
-			System.out.println("Désassignation de la table du maitre d'hôtel:");
+			// on vérifie 
+			System.out.println("Le serveur possède: "+e.nbTableAffectees()+" tables affectées.");
+			System.out.println(("Le ser"));
+			// on l'enlève des tables assignées au maitre d'hotel
 			_maitreHotel.desassignerUneTable(t);
+			
 		}
 	}
 	

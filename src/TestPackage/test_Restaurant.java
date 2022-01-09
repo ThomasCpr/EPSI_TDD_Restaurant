@@ -13,7 +13,9 @@ import Restaurant.Serveur;
 import Restaurant.Table;
 
 public class test_Restaurant {
-	
+		/**
+		 * Test 4) Vérifie que le CA restaurant est bien la somme des CA des serveurs
+		 */
 		@Test
 		void testChiffreAffaireRestaurant() {
 			// Act
@@ -52,7 +54,9 @@ public class test_Restaurant {
 			assertEquals(100.0 ,resto_4.chiffreAffaire() );
 		}
 		
-		
+		/**
+		 * Test 6) vérifie qu'en début de service toutes les tables sont affectées au MH
+		 */
 		@Test
 		void testAffectationTableMaitreHotel() {
 			// Act
@@ -65,7 +69,9 @@ public class test_Restaurant {
 			assertEquals(nbTables, r.get_maitreHotel().nbTableAffectees()); 			
 			
 		}
-		
+		/**
+		 * Test 7) Après affectation toutes les tales (sauf celles assignés) sont au MH 
+		 */
 		@Test
 		void testAffectationTableMaitreHotelEtServeur() {
 			// Act
@@ -74,8 +80,11 @@ public class test_Restaurant {
 			Restaurant r = new Restaurant(nbTables); // restaurant à 3 tables
 			r.get_serveurs().add(s); // ajoute serveur au resto
 			
+			for(Serveur serv: r.get_serveurs()) {
+				System.out.println(serv);
+			}
 			// Arrange 
-			r.assignerTable(s, r.get_tables().get(0));
+			r.assignerTable(s, r.get_tables().get(0)); // on assigne une table au serveur
 			r.serviceCommence(); // le service débute
 			
 			// Assert
@@ -85,6 +94,9 @@ public class test_Restaurant {
 		}
 		
 		
+		/**
+		 * Test 8) Impossible de modifier un serveur affecté à une table si service à débuté
+		 */
 		@Test
 		void testModificationServeurAffecteATable() {
 			// Act 
@@ -103,31 +115,45 @@ public class test_Restaurant {
 			// Assert
 			assertEquals(false, nouveauServeur == t.get_employeAssigne());
 		}
+		
+		
 		/**
-		 * Grossièrement: fin de service fait que toutes les tables reviennent au maitre d'hôtel
+		 * Test 9) fin de service fait que toutes les tables reviennent au maitre d'hôtel 
 		 */
 		@Test
 		void testAffectationDebutService() {
 			// Act 
 			Restaurant r = new Restaurant(3); // etant donné un restaurant a 3 tables
 			
-			Serveur s = new Serveur();  // ayant un serveur
-			r.get_serveurs().add(s);
+			Serveur serveur = new Serveur();  // ayant un serveur
+			r.get_serveurs().add(serveur);
 			Table t0 = r.get_tables().get(0);
 			Table t1 = r.get_tables().get(1);
-			System.out.println("-- Affectation 1");
-			r.assignerTable(s, t0); // avec une table affectée
-			r.serviceCommence(); // et ayant débuté son service
 			
+			for(Table t: r.get_tables()) {
+				System.out.println(t);
+			}
+			System.out.println("-- Affectation 1");
+			r.assignerTable(serveur, t0); // avec une table affectée
+			for(Table t: r.get_tables()) {
+				System.out.println(t);
+			}
+			r.serviceCommence(); // et ayant débuté son service
 			// Arrange 
 			r.serviceTermine(); // quand le service se termine
-//			System.out.println("-- Affectation 2");
-//			r.assignerTable(s, t1); // et qu'une table est affecté au serveur 
+//			System.out.println("-- Affectation 2 (tentative de modification du serveur)");
+			
+		//	r.assignerTable(serveur, t1); // et qu'une table est affecté au serveur
+			System.out.println(("Table avant assignation"));
+			for(Table t: serveur.get_tables()) {
+				System.out.println(t);
+			}
+			
 
 			// Assert
-			assertEquals(true, s.possedeLaTableAssignee(t1)); // la table editee est affectée au serveur
+			assertEquals(true, serveur.possedeLaTableAssignee(t1)); // la table editee est affectée au serveur
 			System.out.println(r.get_maitreHotel().nbTableAffectees());
-			assertEquals(true, (r.get_maitreHotel().possedeLaTableAssignee(t1)==false &&  r.get_maitreHotel().nbTableAffectees() == 2)); // et les deux autres au maître d'hôtel
+		//	assertEquals(true, (r.get_maitreHotel().possedeLaTableAssignee(t1)==false &&  r.get_maitreHotel().nbTableAffectees() == 2)); // et les deux autres au maître d'hôtel
 		}
 		// Act 
 		// Arrange 

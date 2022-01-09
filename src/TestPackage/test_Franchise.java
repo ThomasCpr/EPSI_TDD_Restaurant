@@ -9,7 +9,9 @@ import Restaurant.Restaurant;
 import Restaurant.Serveur;
 
 public class test_Franchise {
-	
+	/**
+	 * Test 5) vérifie que CA est égale à somme des CA des restaurants 
+	 */
 	@Test
 	void testChiffreAffaireFranchise() {
 		// Act

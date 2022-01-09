@@ -1,5 +1,8 @@
 package Restaurant;
 
+import java.util.ArrayList;
+
+
 public class Serveur extends Employe {
 	
 	// - - - - - Attributes - - - - - // 
@@ -26,8 +29,8 @@ public class Serveur extends Employe {
 
 
 	
-	public void desassignerTableCarServiceTermine() {
-		desassignerTablesFinDeService();
+	public ArrayList<Table> desassignerTableCarServiceTermine() {
+		return desassignerTablesFinDeService();
 	}
 	
 }

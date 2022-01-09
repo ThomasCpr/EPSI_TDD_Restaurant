@@ -52,19 +52,20 @@ public class Employe {
 	
 	public void desassignerUneTable(Table tableASupprimer) {
 		System.out.println("- - Désassignation d'une table - -");
-		System.out.println("AVANT désassignation: "+_tables.size());
-		_tables.remove(tableASupprimer); // on la supprime de la liste des tables de l'employe
+		this._tables.remove(tableASupprimer); // on la supprime de la liste des tables de l'employe
 		tableASupprimer.set_employeAssigne(null); // on màj la table
-		System.out.println("APRES désassignation:: "+_tables.size());
 	}
 	
-	protected void desassignerTablesFinDeService() {
+	protected ArrayList<Table> desassignerTablesFinDeService() {
 		System.out.println("- - Désassignation de fin de service - -");
-		// on mets à jour les tables
+		ArrayList<Table> tablesAJour = new ArrayList<Table>();
+		// on mets à jour toutes les tables
 		for(Table t: _tables) {
 			t.set_employeAssigne(null);
 		}
+		tablesAJour = _tables; // on les stock
 		// on mets à jour la liste des tables de l'employé
 		_tables = new ArrayList<Table>();
+		return tablesAJour;
 	}
 }
