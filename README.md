@@ -1,7 +1,7 @@
-"# EPSI_TDD_Restaurant" 
+# EPSI_TDD_Restaurant
 
 
-#Composition du groupe: 
+## Composition du groupe: 
 
 CAPRIO LOMBARDI Thomas
 
@@ -14,3 +14,6 @@ DIMONT Jimmy
 M'HAMDI Farid
 
 ROUICHI Cédric
+
+**Description**
+Développement du sujet Restaurant en utilisant la méthode du TDD.
