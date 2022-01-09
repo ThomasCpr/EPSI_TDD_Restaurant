@@ -7,7 +7,7 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
-
+import Restaurant.Commande;
 import Restaurant.Restaurant;
 import Restaurant.Serveur;
 import Restaurant.Table;
@@ -18,6 +18,7 @@ public class test_Restaurant {
 		 */
 		@Test
 		void testChiffreAffaireRestaurant() {
+			System.out.println("_____TEST_____ : testChiffreAffaireRestaurant()"); 
 			// Act
 			double y = 1.0;
 			Restaurant resto_1 = new Restaurant(0);
@@ -36,15 +37,15 @@ public class test_Restaurant {
 			
 			// Arrange 
 			for(Serveur s : resto_2.get_serveurs()) {
-				s.prendCommande(y);
+				s.prendCommande(new Commande(y));
 			}
 			
 			for(Serveur s : resto_3.get_serveurs()) {
-				s.prendCommande(y);
+				s.prendCommande(new Commande(y));
 			}
 			
 			for(Serveur s : resto_4.get_serveurs()) {
-				s.prendCommande(y);
+				s.prendCommande(new Commande(y));
 			}
 			
 			// Assert
@@ -59,6 +60,7 @@ public class test_Restaurant {
 		 */
 		@Test
 		void testAffectationTableMaitreHotel() {
+			System.out.println("_____TEST_____ : testAffectationTableMaitreHotel()"); 
 			// Act
 			int nbTables = 3;
 			Restaurant r = new Restaurant(nbTables); // restaurant à 3 tables
@@ -74,6 +76,7 @@ public class test_Restaurant {
 		 */
 		@Test
 		void testAffectationTableMaitreHotelEtServeur() {
+			System.out.println("_____TEST_____ : testAffectationTableMaitreHotelEtServeur()"); 
 			// Act
 			int nbTables = 3;
 			Serveur s = new Serveur();
@@ -99,6 +102,7 @@ public class test_Restaurant {
 		 */
 		@Test
 		void testModificationServeurAffecteATable() {
+			System.out.println("_____TEST_____ : testModificationServeurAffecteATable()");
 			// Act 
 			Restaurant r = new Restaurant(3); // etant donné un restaurant a 3 tables
 			Serveur s = new Serveur();  // dont un serveur 
@@ -108,10 +112,8 @@ public class test_Restaurant {
 			
 			// Arrange
 			r.serviceCommence(); // quand le service débute
-			
 			Serveur nouveauServeur = new Serveur();
-			r.assignerTable(nouveauServeur, t ); // si on assigne la table à une autre personne			
-			 
+			r.assignerTable(nouveauServeur, t ); // si on assigne la table à une autre personne			 
 			// Assert
 			assertEquals(false, nouveauServeur == t.get_employeAssigne());
 		}
@@ -122,42 +124,29 @@ public class test_Restaurant {
 		 */
 		@Test
 		void testAffectationDebutService() {
-			// Act 
+			System.out.println("_____TEST_____ : testAffectationDebutService()"); 
+			// Act
 			Restaurant r = new Restaurant(3); // etant donné un restaurant a 3 tables
-			
 			Serveur serveur = new Serveur();  // ayant un serveur
-			r.get_serveurs().add(serveur);
+			r.get_serveurs().add(serveur); 
 			Table t0 = r.get_tables().get(0);
 			Table t1 = r.get_tables().get(1);
-			
-			for(Table t: r.get_tables()) {
-				System.out.println(t);
-			}
-			System.out.println("-- Affectation 1");
 			r.assignerTable(serveur, t0); // avec une table affectée
-			for(Table t: r.get_tables()) {
-				System.out.println(t);
-			}
 			r.serviceCommence(); // et ayant débuté son service
 			// Arrange 
 			r.serviceTermine(); // quand le service se termine
-//			System.out.println("-- Affectation 2 (tentative de modification du serveur)");
 			
-		//	r.assignerTable(serveur, t1); // et qu'une table est affecté au serveur
-			System.out.println(("Table avant assignation"));
-			for(Table t: serveur.get_tables()) {
-				System.out.println(t);
-			}
-			
+			r.assignerTable(serveur, t1); // et qu'une table est affecté au serveur
 
 			// Assert
 			assertEquals(true, serveur.possedeLaTableAssignee(t1)); // la table editee est affectée au serveur
-			System.out.println(r.get_maitreHotel().nbTableAffectees());
-		//	assertEquals(true, (r.get_maitreHotel().possedeLaTableAssignee(t1)==false &&  r.get_maitreHotel().nbTableAffectees() == 2)); // et les deux autres au maître d'hôtel
+			// la table du serveur n'est pas dans les tables assignées au MH mais il possède les deux autres
+			assertEquals(true, (r.get_maitreHotel().possedeLaTableAssignee(t1)==false &&  r.get_maitreHotel().nbTableAffectees() == 2));
 		}
+		
+		
 		// Act 
 		// Arrange 
 		// Assert
 		
-		// faire le choix de qui assigne à qui. tant pis si le code des tests est pas beau mais la 
 }

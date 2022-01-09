@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import Restaurant.Commande;
 import Restaurant.Serveur;
 
 public class test_Serveur {
@@ -15,11 +16,12 @@ public class test_Serveur {
 	 */
 	@Test
 	void testChiffreAffaireAZero() {
+		System.out.println("_____TEST_____ : testChiffreAffaireAZero()");
 		// Act 
 		Serveur serv = new Serveur();
 		// Arrange 
 		// Assert 
-		assertEquals(serv.chiffreAffaire, 0);
+		assertEquals(0, serv.chiffreAffaire);
 	}
 	
 	/**
@@ -27,24 +29,26 @@ public class test_Serveur {
 	 */
 	@Test
 	void testChiffreAffaireEgaleCommande() {
+		System.out.println("_____TEST_____ : testChiffreAffaireEgaleCommande()");
 		// Act 
 		Serveur serv = new Serveur();
 		// Arrange 
-		serv.prendCommande(100);
+		serv.prendCommande(new Commande(100));
 		// Assert 
-		assertEquals(serv.chiffreAffaire, 100);
+		assertEquals(100, serv.chiffreAffaire);
 	}
 	/**
 	 * Test 3) 	CA d'un serveur est égale à la somme de ces commandes 
 	 */
 	@Test
 	void testChiffreAffaireEstSommeCommande() {
+		System.out.println("_____TEST_____ : testChiffreAffaireEstSommeCommande()");
 		// Act 
 		Serveur serv = new Serveur();
 		// Arrange 
-		serv.prendCommande(100);
-		serv.prendCommande(100);
+		serv.prendCommande(new Commande(100));
+		serv.prendCommande(new Commande(100));
 		// Assert 
-		assertEquals(serv.chiffreAffaire, 200);
+		assertEquals(200, serv.chiffreAffaire);
 	}
 }

@@ -28,12 +28,11 @@ public class Employe {
 	
 	
 	public void assignerTable(Table t) {
+		System.out.println("\nEmploye Class: assignerTable(Table "+t+") ");		
 		// si la table ne possède pas déjà quelqu'un d'assigné
 		if(t.get_employeAssigne() == null) {
-			// on assigne la table a l'employe
-			this._tables.add(t);
-			// on assigne l'employe à la table
-			t.set_employeAssigne(this);
+			this._tables.add(t); // on assigne la table a l'employe
+			t.set_employeAssigne(this); // on assigne l'employe à la table
 		}
 	}
 	
@@ -51,21 +50,26 @@ public class Employe {
 	}
 	
 	public void desassignerUneTable(Table tableASupprimer) {
-		System.out.println("- - Désassignation d'une table - -");
-		this._tables.remove(tableASupprimer); // on la supprime de la liste des tables de l'employe
-		tableASupprimer.set_employeAssigne(null); // on màj la table
+		System.out.println("\nEmploye Class: desassignerUneTable(Table "+tableASupprimer+")");
+		// est ce que la table était assignées à cet employee? 
+		if (tableASupprimer.get_employeAssigne().equals(this)) {
+			// OUI - on la supprime de la liste des tables de l'employe
+			ArrayList<Table> tablesAJour = new ArrayList<Table>();
+			// on récupère toutes les autres tables
+			for(Table t: this._tables) {
+				if(!t.equals(tableASupprimer)) {
+					tablesAJour.add(t);
+				}
+			}
+			// on donne la nouvelle liste de table de l'employee sans celle supprimée
+			_tables = tablesAJour;
+			tableASupprimer.set_employeAssigne(null); // on màj la table supprimée
+		}
+		else {
+			// NON - on ne fait rien
+			System.out.println("\tLa table n'appartient pas à cet employé elle n'est pas désassignée.");
+		}
 	}
 	
-	protected ArrayList<Table> desassignerTablesFinDeService() {
-		System.out.println("- - Désassignation de fin de service - -");
-		ArrayList<Table> tablesAJour = new ArrayList<Table>();
-		// on mets à jour toutes les tables
-		for(Table t: _tables) {
-			t.set_employeAssigne(null);
-		}
-		tablesAJour = _tables; // on les stock
-		// on mets à jour la liste des tables de l'employé
-		_tables = new ArrayList<Table>();
-		return tablesAJour;
-	}
+
 }

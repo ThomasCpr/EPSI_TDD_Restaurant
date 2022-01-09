@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import Restaurant.Commande;
 import Restaurant.Franchise;
 import Restaurant.Restaurant;
 import Restaurant.Serveur;
@@ -14,6 +15,7 @@ public class test_Franchise {
 	 */
 	@Test
 	void testChiffreAffaireFranchise() {
+		System.out.println("_____TEST_____ : testChiffreAffaireFranchise()");
 		// Act
 		double z = 1.0;
 		int x0, x1, x2, x3, y0, y1, y2, y3;
@@ -32,7 +34,7 @@ public class test_Franchise {
 		for(Restaurant r : f0.get_restaurants()) {
 			for(int i = 0; i<y0; i++) {
 				Serveur s = new Serveur();
-				s.prendCommande(z);
+				s.prendCommande(new Commande(z));
 				r.get_serveurs().add(s);
 			}
 		}
@@ -40,7 +42,7 @@ public class test_Franchise {
 		for(Restaurant r : f1.get_restaurants()) {
 			for(int i = 0; i<y1; i++) {
 				Serveur s = new Serveur();
-				s.prendCommande(z);
+				s.prendCommande(new Commande(z));
 				r.get_serveurs().add(s);
 			}
 		}
@@ -48,7 +50,7 @@ public class test_Franchise {
 		for(Restaurant r : f2.get_restaurants()) {
 			for(int i = 0; i<y2; i++) {
 				Serveur s = new Serveur();
-				s.prendCommande(z);
+				s.prendCommande(new Commande(z));
 				r.get_serveurs().add(s);
 			}
 		}
@@ -56,7 +58,7 @@ public class test_Franchise {
 		for(Restaurant r : f3.get_restaurants()) {
 			for(int i = 0; i<y3; i++) {
 				Serveur s = new Serveur();
-				s.prendCommande(z);
+				s.prendCommande(new Commande(z));
 				r.get_serveurs().add(s);
 			}
 		} 
