@@ -7,38 +7,38 @@ public class Serveur extends Employe {
 	
 	// - - - - - Attributes - - - - - // 
 	
-	public double chiffreAffaire = 0.0;
-	public ArrayList<Commande> _commandes;
+	private double dChiffreAffaire = 0.0;
+	private ArrayList<Commande> _aoCcommandes;
 	
 	
 	// - - - - - Constructors - - - - - //
 	public Serveur() {
 		super();
-		_commandes = new ArrayList<Commande>();
+		_aoCcommandes = new ArrayList<Commande>();
 	}
 	// - - - - - Methods - - - - - //
-	public double getChiffreAffaire() {
-		return chiffreAffaire;
+	public double getdChiffreAffaire() {
+		return dChiffreAffaire;
 	}
-	public void setChiffreAffaire(double chiffreAffaire) {
-		this.chiffreAffaire = chiffreAffaire;
+	public void setdChiffreAffaire(double dChiffreAffaire) {
+		this.dChiffreAffaire = dChiffreAffaire;
 	}
 	
 	public void prendCommande(Commande commande) {
-		chiffreAffaire += commande.get_dMontantTotal();
-		_commandes.add(commande);
+		dChiffreAffaire += commande.get_dMontantTotal();
+		_aoCcommandes.add(commande);
 	}
 	
-	public ArrayList<Commande> get_commandes() {
-		return _commandes;
+	public ArrayList<Commande> get_aoCcommandes() {
+		return _aoCcommandes;
 	}
-	public void set_commandes(ArrayList<Commande> _commandes) {
-		this._commandes = _commandes;
+	public void set_aoCcommandes(ArrayList<Commande> _aoCcommandes) {
+		this._aoCcommandes = _aoCcommandes;
 	}
 
 	public Commande declarerCommandeNonPayee(Commande commande, Date dateEpinglage ) {
 		// on récupère la commandes auprès du serveur
-		Commande com = _commandes.get(_commandes.indexOf(commande));
+		Commande com = _aoCcommandes.get(_aoCcommandes.indexOf(commande));
 		// on regarde si on a fournit une date (pour faciliter les tests 2 méthodes ont été faites)
 		if(dateEpinglage == null){
 			com.set_bEpinglee(true);

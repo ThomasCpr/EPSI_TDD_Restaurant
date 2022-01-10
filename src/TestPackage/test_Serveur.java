@@ -21,7 +21,7 @@ public class test_Serveur {
 		Serveur serv = new Serveur();
 		// Arrange 
 		// Assert 
-		assertEquals(0, serv.chiffreAffaire);
+		assertEquals(0, serv.getdChiffreAffaire());
 	}
 	
 	/**
@@ -35,7 +35,7 @@ public class test_Serveur {
 		// Arrange 
 		serv.prendCommande(new Commande(100));
 		// Assert 
-		assertEquals(100, serv.chiffreAffaire);
+		assertEquals(100, serv.getdChiffreAffaire());
 	}
 	/**
 	 * Test 3) 	CA d'un serveur est égale à la somme de ces commandes 
@@ -49,6 +49,6 @@ public class test_Serveur {
 		serv.prendCommande(new Commande(100));
 		serv.prendCommande(new Commande(100));
 		// Assert 
-		assertEquals(200, serv.chiffreAffaire);
+		assertEquals(200, serv.getdChiffreAffaire());
 	}
 }

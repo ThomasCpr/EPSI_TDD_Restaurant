@@ -14,9 +14,9 @@ public class MaitreHotel extends Employe {
 	
 	public void assignerTablesCarMaitreHotel(ArrayList<Table> tablesAReassigner) {
 		for(Table t : tablesAReassigner) {
-			t.set_employeAssigne(this);
+			t.set_oEmployeAssigne(this);
 		}
-		set_tables(tablesAReassigner);
+		set_aoTables(tablesAReassigner);
 	}
 	
 	

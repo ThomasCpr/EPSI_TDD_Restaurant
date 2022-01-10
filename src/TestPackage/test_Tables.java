@@ -19,11 +19,11 @@ public class test_Tables {
 		rest.serviceCommence(); // ayant débuté sont service
 		
 		// Arrange 	
-		rest.get_tables().get(0).set_estLibre(false); // quand un client est affecté à une table
+		rest.get_aoTables().get(0).set_bEstLibre(false); // quand un client est affecté à une table
 		
 		// Assert
 		// alors cette table n'est plus sur la liste des tables libres du restaurant
-		assertEquals(false,  rest.get_tablesLibres().contains(rest.get_tables().get(0))); 
+		assertEquals(false,  rest.get_aoTablesLibres().contains(rest.get_aoTables().get(0))); 
 	}
 	
 	/**
@@ -33,11 +33,11 @@ public class test_Tables {
 		System.out.println("_____TEST_____ : testLiberationTable()"); 
 		// Act 
 		Restaurant rest = new Restaurant(5); // etant donné un restaurant 
-		rest.get_tables().get(1).set_estLibre(false); // avec une table occupée par un client
+		rest.get_aoTables().get(1).set_bEstLibre(false); // avec une table occupée par un client
 		// Arrange
-		rest.get_tables().get(1).set_estLibre(true); // quand la talbe est libérée
+		rest.get_aoTables().get(1).set_bEstLibre(true); // quand la talbe est libérée
 		// Assert
-		assertEquals(true, rest.get_tablesLibres().contains(rest.get_tables().get(1))); 
+		assertEquals(true, rest.get_aoTablesLibres().contains(rest.get_aoTables().get(1))); 
 	}
 
 }

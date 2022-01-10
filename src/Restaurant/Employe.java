@@ -4,42 +4,42 @@ import java.util.ArrayList;
 
 public class Employe {
 	
-	private ArrayList<Table> _tables;
+	private ArrayList<Table> _aoTables;
 
 
 	public Employe() {
 		super();
-		_tables = new ArrayList<Table>();
+		_aoTables = new ArrayList<Table>();
 	}
 
 	public Employe(ArrayList<Table> tables) {
-		_tables = tables;
+		_aoTables = tables;
 	}
-	public ArrayList<Table> get_tables() {
-		return _tables;
+	public ArrayList<Table> get_aoTables() {
+		return _aoTables;
 	}
 
-	public void set_tables(ArrayList<Table> _tables) {
-		this._tables = _tables;
+	public void set_aoTables(ArrayList<Table> _aoTables) {
+		this._aoTables = _aoTables;
 	}
 		
 	public int nbTableAffectees() {
-		return _tables.size();	}
+		return _aoTables.size();	}
 	
 	
 	public void assignerTable(Table t) {
 		System.out.println("\nEmploye Class: assignerTable(Table "+t+") ");		
 		// si la table ne possède pas déjà quelqu'un d'assigné
-		if(t.get_employeAssigne() == null) {
-			this._tables.add(t); // on assigne la table a l'employe
-			t.set_employeAssigne(this); // on assigne l'employe à la table
+		if(t.get_oEmployeAssigne() == null) {
+			this._aoTables.add(t); // on assigne la table a l'employe
+			t.set_oEmployeAssigne(this); // on assigne l'employe à la table
 		}
 	}
 	
 	public boolean possedeLaTableAssignee(Table tableAVerifier) {
 		// si l'employee possède des tables assignées
-		if(!(_tables.isEmpty())) {
-			for(Table t : _tables) {
+		if(!(_aoTables.isEmpty())) {
+			for(Table t : _aoTables) {
 				// on regarde si parmis elle on a la table que l'on cherche
 				if (t == tableAVerifier) {
 					return true;
@@ -52,18 +52,18 @@ public class Employe {
 	public void desassignerUneTable(Table tableASupprimer) {
 		System.out.println("\nEmploye Class: desassignerUneTable(Table "+tableASupprimer+")");
 		// est ce que la table était assignées à cet employee? 
-		if (tableASupprimer.get_employeAssigne().equals(this)) {
+		if (tableASupprimer.get_oEmployeAssigne().equals(this)) {
 			// OUI - on la supprime de la liste des tables de l'employe
 			ArrayList<Table> tablesAJour = new ArrayList<Table>();
 			// on récupère toutes les autres tables
-			for(Table t: this._tables) {
+			for(Table t: this._aoTables) {
 				if(!t.equals(tableASupprimer)) {
 					tablesAJour.add(t);
 				}
 			}
 			// on donne la nouvelle liste de table de l'employee sans celle supprimée
-			_tables = tablesAJour;
-			tableASupprimer.set_employeAssigne(null); // on màj la table supprimée
+			_aoTables = tablesAJour;
+			tableASupprimer.set_oEmployeAssigne(null); // on màj la table supprimée
 		}
 		else {
 			// NON - on ne fait rien

@@ -25,41 +25,40 @@ public class test_Franchise {
 		x3 = y3 = 1000;
 		
 		Franchise f0 = new Franchise(x0);
-
 		Franchise f1 = new Franchise(x1);
 		Franchise f2 = new Franchise(x2);
 		Franchise f3 = new Franchise(x3);
 		
 		// Arrange - on ajoute les serveurs aux restaurants
-		for(Restaurant r : f0.get_restaurants()) {
+		for(Restaurant r : f0.get_aoRestaurants()) {
 			for(int i = 0; i<y0; i++) {
 				Serveur s = new Serveur();
 				s.prendCommande(new Commande(z));
-				r.get_serveurs().add(s);
+				r.get_aoServeurs().add(s);
 			}
 		}
 		
-		for(Restaurant r : f1.get_restaurants()) {
+		for(Restaurant r : f1.get_aoRestaurants()) {
 			for(int i = 0; i<y1; i++) {
 				Serveur s = new Serveur();
 				s.prendCommande(new Commande(z));
-				r.get_serveurs().add(s);
+				r.get_aoServeurs().add(s);
 			}
 		}
 		
-		for(Restaurant r : f2.get_restaurants()) {
+		for(Restaurant r : f2.get_aoRestaurants()) {
 			for(int i = 0; i<y2; i++) {
 				Serveur s = new Serveur();
 				s.prendCommande(new Commande(z));
-				r.get_serveurs().add(s);
+				r.get_aoServeurs().add(s);
 			}
 		}
 		
-		for(Restaurant r : f3.get_restaurants()) {
+		for(Restaurant r : f3.get_aoRestaurants()) {
 			for(int i = 0; i<y3; i++) {
 				Serveur s = new Serveur();
 				s.prendCommande(new Commande(z));
-				r.get_serveurs().add(s);
+				r.get_aoServeurs().add(s);
 			}
 		} 
 		// Assert
@@ -67,6 +66,6 @@ public class test_Franchise {
 		assertEquals(f1.chiffreAffaires(), x1*y1*z);
 		assertEquals(f2.chiffreAffaires(), x2*y2*z);
 		assertEquals(f3.chiffreAffaires(), x3*y3*z);
-		
 	}
+
 }

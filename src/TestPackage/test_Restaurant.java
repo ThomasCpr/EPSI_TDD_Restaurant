@@ -24,27 +24,27 @@ public class test_Restaurant {
 			Restaurant resto_1 = new Restaurant(0);
 			
 			Restaurant resto_2 = new Restaurant(1);
-			resto_2.get_serveurs().add(new Serveur());
+			resto_2.get_aoServeurs().add(new Serveur());
 			
 			Restaurant resto_3 = new Restaurant(2);			
-			resto_3.get_serveurs().add(new Serveur());
-			resto_3.get_serveurs().add(new Serveur());
+			resto_3.get_aoServeurs().add(new Serveur());
+			resto_3.get_aoServeurs().add(new Serveur());
 
 			Restaurant resto_4 = new Restaurant(100);
 			for(int i = 0 ; i<100; i++) {
-				resto_4.get_serveurs().add(new Serveur());
+				resto_4.get_aoServeurs().add(new Serveur());
 			}
 			
 			// Arrange 
-			for(Serveur s : resto_2.get_serveurs()) {
+			for(Serveur s : resto_2.get_aoServeurs()) {
 				s.prendCommande(new Commande(y));
 			}
 			
-			for(Serveur s : resto_3.get_serveurs()) {
+			for(Serveur s : resto_3.get_aoServeurs()) {
 				s.prendCommande(new Commande(y));
 			}
 			
-			for(Serveur s : resto_4.get_serveurs()) {
+			for(Serveur s : resto_4.get_aoServeurs()) {
 				s.prendCommande(new Commande(y));
 			}
 			
@@ -68,7 +68,7 @@ public class test_Restaurant {
 			r.serviceCommence(); // le service débute
 			// Assert
 			// le maitre d'hotel possède toutes les tables
-			assertEquals(nbTables, r.get_maitreHotel().nbTableAffectees()); 			
+			assertEquals(nbTables, r.get_oMaitreHotel().nbTableAffectees()); 			
 			
 		}
 		/**
@@ -81,17 +81,17 @@ public class test_Restaurant {
 			int nbTables = 3;
 			Serveur s = new Serveur();
 			Restaurant r = new Restaurant(nbTables); // restaurant à 3 tables
-			r.get_serveurs().add(s); // ajoute serveur au resto
+			r.get_aoServeurs().add(s); // ajoute serveur au resto
 			
-			for(Serveur serv: r.get_serveurs()) {
+			for(Serveur serv: r.get_aoServeurs()) {
 				System.out.println(serv);
 			}
 			// Arrange 
-			r.assignerTable(s, r.get_tables().get(0)); // on assigne une table au serveur
+			r.assignerTable(s, r.get_aoTables().get(0)); // on assigne une table au serveur
 			r.serviceCommence(); // le service débute
 			
 			// Assert
-			assertEquals(2, r.get_maitreHotel().nbTableAffectees()); // le maitre d'hotel possède toutes les tables sauf une 	
+			assertEquals(2, r.get_oMaitreHotel().nbTableAffectees()); // le maitre d'hotel possède toutes les tables sauf une 	
 			assertEquals(1, s.nbTableAffectees());
 			
 		}
@@ -106,8 +106,8 @@ public class test_Restaurant {
 			// Act 
 			Restaurant r = new Restaurant(3); // etant donné un restaurant a 3 tables
 			Serveur s = new Serveur();  // dont un serveur 
-			r.get_serveurs().add(s); //  
-			Table t = r.get_tables().get(0); // dont une table
+			r.get_aoServeurs().add(s); //  
+			Table t = r.get_aoTables().get(0); // dont une table
 			r.assignerTable(s, t); // lui étant affecté
 			
 			// Arrange
@@ -115,7 +115,7 @@ public class test_Restaurant {
 			Serveur nouveauServeur = new Serveur();
 			r.assignerTable(nouveauServeur, t ); // si on assigne la table à une autre personne			 
 			// Assert
-			assertEquals(false, nouveauServeur == t.get_employeAssigne());
+			assertEquals(false, nouveauServeur == t.get_oEmployeAssigne());
 		}
 		
 		
@@ -128,9 +128,9 @@ public class test_Restaurant {
 			// Act
 			Restaurant r = new Restaurant(3); // etant donné un restaurant a 3 tables
 			Serveur serveur = new Serveur();  // ayant un serveur
-			r.get_serveurs().add(serveur); 
-			Table t0 = r.get_tables().get(0);
-			Table t1 = r.get_tables().get(1);
+			r.get_aoServeurs().add(serveur); 
+			Table t0 = r.get_aoTables().get(0);
+			Table t1 = r.get_aoTables().get(1);
 			r.assignerTable(serveur, t0); // avec une table affectée
 			r.serviceCommence(); // et ayant débuté son service
 			// Arrange 
@@ -141,7 +141,7 @@ public class test_Restaurant {
 			// Assert
 			assertEquals(true, serveur.possedeLaTableAssignee(t1)); // la table editee est affectée au serveur
 			// la table du serveur n'est pas dans les tables assignées au MH mais il possède les deux autres
-			assertEquals(true, (r.get_maitreHotel().possedeLaTableAssignee(t1)==false &&  r.get_maitreHotel().nbTableAffectees() == 2));
+			assertEquals(true, (r.get_oMaitreHotel().possedeLaTableAssignee(t1)==false &&  r.get_oMaitreHotel().nbTableAffectees() == 2));
 		}
 		
 		

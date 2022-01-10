@@ -64,14 +64,14 @@ public class test_Commandes {
 		// Act 
 		Restaurant rest = new Restaurant(3); // soit un restaurant
 		Serveur serv = new Serveur();
-		rest.get_serveurs().add(serv); //  avec un serveur
+		rest.get_aoServeurs().add(serv); //  avec un serveur
 		Commande com = new Commande(10); // et une commande
 		// Arrange
 		serv.prendCommande(com); 
 		serv.declarerCommandeNonPayee(com, dDateDepassee()); // déclarée à transmettre
 		rest.recupererCommandesATransmettre(); 
 		// Assert
-		assertEquals(true, rest.get_commandeATransmettre().contains(com));// quand on consulte la lsite des cmd à transmettre elle y figure
+		assertEquals(true, rest.get_aoCommandeATransmettre().contains(com));// quand on consulte la lsite des cmd à transmettre elle y figure
 	}
 	
 	/**
@@ -89,6 +89,6 @@ public class test_Commandes {
 		rest.recupererCommandesATransmettre(); // une fois que les commandes à transmettre sont récupérées
 		rest.transmettreCommandeGendarmerie(); // et qu'elles sont transmises
 		// Assert 
-		assertEquals(false, rest.get_commandeATransmettre().contains(com)); // elle ne figure plus dans la liste des cmd à transmettre
+		assertEquals(false, rest.get_aoCommandeATransmettre().contains(com)); // elle ne figure plus dans la liste des cmd à transmettre
 	}
 }

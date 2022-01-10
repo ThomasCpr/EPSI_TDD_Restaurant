@@ -1,28 +1,30 @@
 package Restaurant;
 
 public class Table {
-	private Employe _employeAssigne;
-	private boolean _estLibre = true; // on décide qu'une nouvelle table est toujours libre
 	
+	// - - - - - Attributes - - - - - // 
+	private Employe _oEmployeAssigne;
+	private boolean _bEstLibre = true; // on décide qu'une nouvelle table est toujours libre
+	// - - - - - Constructors - - - - - //
 	public Table() {
 		
 	}
 	public Table(Employe e ) {
-		_employeAssigne = e;
+		_oEmployeAssigne = e;
 	}
+	// - - - - - Methods - - - - - //
 	
-	
-	public Employe get_employeAssigne() {
-		return _employeAssigne;
+	public Employe get_oEmployeAssigne() {
+		return _oEmployeAssigne;
 	}
-	public void set_employeAssigne(Employe _employeAssigne) {
-		this._employeAssigne = _employeAssigne;
+	public void set_oEmployeAssigne(Employe _oEmployeAssigne) {
+		this._oEmployeAssigne = _oEmployeAssigne;
 	}
-	public boolean is_estLibre() {
-		return _estLibre;
+	public boolean is_bEstLibre() {
+		return _bEstLibre;
 	}
-	public void set_estLibre(boolean _estLibre) {
-		this._estLibre = _estLibre;
+	public void set_bEstLibre(boolean _bEstLibre) {
+		this._bEstLibre = _bEstLibre;
 	}
 	
 	
