@@ -145,8 +145,5 @@ public class test_Restaurant {
 		}
 		
 		
-		// Act 
-		// Arrange 
-		// Assert
-		
+
 }

@@ -80,4 +80,6 @@ public class test_Menu {
 		assertEquals(dPrixPremierPlat, rest.get_aoMenuRestaurant().get(rest.get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu().get("Entrecôte"));
 		assertEquals(dPrixDeuxiemePlat, rest.get_aoMenuRestaurant().get(rest.get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu().get("Côtes de porc"));
 	}
+	
+
 }

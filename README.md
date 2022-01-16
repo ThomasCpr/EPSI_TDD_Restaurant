@@ -22,10 +22,10 @@ Développement du sujet Restaurant en utilisant la méthode du TDD.
 
 **Remarques**
 
-> Attention le code est loin d'être très très propre, tant au niveau de la conception qu'au niveau de la complexité des méthodes. La consigne étant de faire des tests, de nombreuses notions de POO ont été homises.
+* Attention le code est loin d'être très très propre, tant au niveau de la conception qu'au niveau de la complexité des méthodes. La consigne étant de faire des tests, de nombreuses notions de POO ont été homises.
 De plus, je suis nul en tests.
 
-> Les règles de nommages sont les suivantes:
+* Les règles de nommages sont les suivantes:
     Tous les attributs d'objets possèdent leur type en préfixe.
 - a pour ArrayList
 - o pour objet (ao = ArrayList<Object> avec le type d'objet généralement contenu dans le nom du paramètre)

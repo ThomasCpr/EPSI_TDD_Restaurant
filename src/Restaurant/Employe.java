@@ -29,7 +29,7 @@ public class Employe {
 	
 	public void assignerTable(Table t) {
 		System.out.println("\nEmploye Class: assignerTable(Table "+t+") ");		
-		// si la table ne possède pas déjà quelqu'un d'assigné
+		// si la table ne possède pas déjà un serveur  d'assigné
 		if(t.get_oEmployeAssigne() == null) {
 			this._aoTables.add(t); // on assigne la table a l'employe
 			t.set_oEmployeAssigne(this); // on assigne l'employe à la table

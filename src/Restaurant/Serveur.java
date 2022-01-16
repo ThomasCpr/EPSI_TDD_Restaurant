@@ -9,6 +9,7 @@ public class Serveur extends Employe {
 	
 	private double dChiffreAffaire = 0.0;
 	private ArrayList<Commande> _aoCcommandes;
+	private Cuisine _oCuisine;
 	
 	
 	// - - - - - Constructors - - - - - //
@@ -16,25 +17,41 @@ public class Serveur extends Employe {
 		super();
 		_aoCcommandes = new ArrayList<Commande>();
 	}
-	// - - - - - Methods - - - - - //
+	
+	// - - - - - GETTERS && SETTERS - - - - - //
 	public double getdChiffreAffaire() {
 		return dChiffreAffaire;
 	}
 	public void setdChiffreAffaire(double dChiffreAffaire) {
 		this.dChiffreAffaire = dChiffreAffaire;
 	}
-	
-	public void prendCommande(Commande commande) {
-		dChiffreAffaire += commande.get_dMontantTotal();
-		_aoCcommandes.add(commande);
-	}
-	
 	public ArrayList<Commande> get_aoCcommandes() {
 		return _aoCcommandes;
 	}
 	public void set_aoCcommandes(ArrayList<Commande> _aoCcommandes) {
 		this._aoCcommandes = _aoCcommandes;
 	}
+	public Cuisine get_oCuisine() {
+		return _oCuisine;
+	}
+	public void set_oCuisine(Cuisine _oCuisine) {
+		this._oCuisine = _oCuisine;
+	}
+
+	// - - - - - METHODS - - - - - //
+	public void prendCommande(Commande commande) {
+		dChiffreAffaire += commande.get_dMontantTotal();
+		_aoCcommandes.add(commande);
+		if(commande.is_bNourriture()) {
+			_oCuisine.get_aoCommandes().add(commande);
+		}
+	}
+	
+	public Table getTablePourCmd(Table table) {
+		return get_aoTables().get(get_aoTables().indexOf(table));
+	}
+	
+
 
 	public Commande declarerCommandeNonPayee(Commande commande, Date dateEpinglage ) {
 		// on récupère la commandes auprès du serveur

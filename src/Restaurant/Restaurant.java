@@ -14,6 +14,7 @@ public class Restaurant {
 	private MaitreHotel _oMaitreHotel;
 	private ArrayList<Commande> _aoCommandeATransmettre;
 	private ArrayList<Menu> _aoMenuRestaurant;
+	private Cuisine _oCuisine;
 	
 	
 	// - - - - - Constructors - - - - - //
@@ -23,6 +24,7 @@ public class Restaurant {
 		 _aoServeurs = new ArrayList<Serveur>();
 		 _aoTables = new ArrayList<Table>();
 		 _aoMenuRestaurant = new ArrayList<Menu>();
+		 _oCuisine = new Cuisine();
 	}
 	
 	public Restaurant( int nbTable) { 
@@ -35,6 +37,7 @@ public class Restaurant {
 		_oMaitreHotel.assignerTablesCarMaitreHotel(_aoTables); // on lui ajoute automatiquement les tables
 		_aoCommandeATransmettre = new ArrayList<Commande>();
 		_aoMenuRestaurant = new ArrayList<Menu>();
+		_oCuisine = new Cuisine();
 	}
 	
 	
@@ -70,8 +73,14 @@ public class Restaurant {
 	public void set_aoMenuRestaurant(ArrayList<Menu> _aoMenuRestaurant) {
 		this._aoMenuRestaurant = _aoMenuRestaurant;
 	}
-		
-	
+	public Cuisine get_oCuisine() {
+		return _oCuisine;
+	}
+
+	public void set_oCuisine(Cuisine _oCuisine) {
+		this._oCuisine = _oCuisine;
+	}
+
 	// - - - - - Methods - - - - - //
 	/**
 	 * chiffre d'affaire deu restaurant
@@ -192,6 +201,7 @@ public class Restaurant {
 		Menu menu = new Menu(_sNom);
 		_aoMenuRestaurant.add(menu);
 	}
+	
 	/**
 	 * Permet d'ajouter un plat et son prix à un menu
 	 * @param sNomMenu <String> le nom du menu
@@ -200,6 +210,14 @@ public class Restaurant {
 	 */
 	public void addPlatToMenu(String sNomMenu, String sNomPlat, double dPrixPlat) {
 		_aoMenuRestaurant.get(get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu().put(sNomPlat, dPrixPlat);
+	}
+	/**
+	 * Permet d'ajouter le serveur au restaurant tout en lui indiquant quelle est sa cuisine 
+	 * @param s <Serveur> le serveur recruté
+	 */
+	public void recruterServeur(Serveur s) {
+		_aoServeurs.add(s);
+		s.set_oCuisine(_oCuisine);
 	}
 }
 

@@ -8,16 +8,21 @@ public class Commande {
 	private boolean _bEpinglee = false;
 	private Date _dDateEpinglage;
 	private boolean _bTransmiste = false;
-	
+	private boolean _bNourriture; // true si la commande concerne de la nourriture, false sinon.
 	
 	// - - - - - Constructors - - - - - //
-	public Commande() {	
-	}
 	public Commande(double _montant) {
 		_dMontantTotal = _montant;
 	}
+	public Commande(boolean _bNourriture) {
+		this._bNourriture = _bNourriture;
+	}
+	public Commande(double _montant, boolean _bNourriture) {
+		_dMontantTotal = _montant;
+		this._bNourriture = _bNourriture;
+	}
 	
-	// - - - - - Methods - - - - - //	
+	// - - - - - GETTERS && SETTERS - - - - - //	
 	public double get_dMontantTotal() {
 		return _dMontantTotal;
 	}
@@ -29,13 +34,11 @@ public class Commande {
 	}
 	public void set_bEpinglee(boolean _bEpinglee) {
 		this._bEpinglee = _bEpinglee;
-	}
-	
+	}	
 	public void set_bEpingleAUneDate(boolean _bEpinglee, Date dateEpinglage) {
 		this._bEpinglee = _bEpinglee;
 		this._dDateEpinglage = dateEpinglage;	
-	}
-	
+	}	
 	public Date get_dDateEpinglage() {
 		return _dDateEpinglage;
 	}
@@ -45,13 +48,20 @@ public class Commande {
 	public boolean is_bTransmiste() {
 		return _bTransmiste;
 	}
-	
 	public void set_bTransmiste(boolean _bTransmiste) {
 		this._bTransmiste = _bTransmiste;
 	}
+	public boolean is_bNourriture() {
+		return _bNourriture;
+	}
+	public void set_bNourriture(boolean _bNourriture) {
+		this._bNourriture = _bNourriture;
+	}
+	
+	// - - - - - Methods - - - - - //
 	/**
-	 * Calcul si la date d'épinglage est dépassée de 15 jours
-	 * @return
+	 * Propriété calculé: Calcul si la date d'épinglage est dépassée de 15 jours
+	 * @return True si elle a dépassé les 15 jouurs et qu'il faut la transmettre, False sinon
 	 */
 	public boolean bATransmettre() {
 		Date dToday = new Date(); // on prend la date du jour
