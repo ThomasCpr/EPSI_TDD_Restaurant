@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import Restaurant.Commande;
 import Restaurant.Franchise;
 import Restaurant.Restaurant;
+import Restaurant.Serveur;
 import Restaurant.Menu;
 
 public class test_Menu {
@@ -81,5 +83,24 @@ public class test_Menu {
 		assertEquals(dPrixDeuxiemePlat, rest.get_aoMenuRestaurant().get(rest.get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu().get("Côtes de porc"));
 	}
 	
+//	/**
+//	 * Test 21) 
+//	 */
+//	@Test void testSuppressionPlatCarteSiFauteDeStock() {
+//		System.out.println("_____TEST_____ : testSuppressionPlatCarteSiFauteDeStock()");
+//		// Act 
+//		Restaurant rest = new Restaurant(5);
+//		Serveur serv = new Serveur();
+//		rest.recruterServeur(serv); // ETANT donné un serveur dans un restaurant
+//		Commande com = new Commande(50, true);
+//		serv.prendCommande(com); // ayant pris une commande
+//		// Arrange
+//		rest.get_oCuisine().refuseCommande(com); // quand la cuisine refuse la commande faute de stocks
+//		
+//		// assert
+//		assertEquals(false,rest.getPlats().contains(plats));
+//		
+//		
+//	}
 
 }

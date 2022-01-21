@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import Restaurant.Commande;
+import Restaurant.Restaurant;
 import Restaurant.Serveur;
 
 public class test_Serveur {
@@ -31,11 +32,14 @@ public class test_Serveur {
 	void testChiffreAffaireEgaleCommande() {
 		System.out.println("_____TEST_____ : testChiffreAffaireEgaleCommande()");
 		// Act 
-		Serveur serv = new Serveur();
+		Restaurant rest = new Restaurant(5);
+		Serveur serv = new Serveur(); // ETANT DONNE un nouveau serveur
+		rest.recruterServeur(serv);
+		rest.assignerTable(serv, rest.get_aoTables().get(0));
 		// Arrange 
-		serv.prendCommande(new Commande(100));
+		serv.prendCommande(new Commande(100,true, null), rest.get_aoTables().get(0)); // QUAND il prend une nouvelle commande
 		// Assert 
-		assertEquals(100, serv.getdChiffreAffaire());
+		assertEquals(100, serv.getdChiffreAffaire()); // alors son chiffre d'affaire est le montant de celle ci
 	}
 	/**
 	 * Test 3) 	CA d'un serveur est égale à la somme de ces commandes 
@@ -44,10 +48,15 @@ public class test_Serveur {
 	void testChiffreAffaireEstSommeCommande() {
 		System.out.println("_____TEST_____ : testChiffreAffaireEstSommeCommande()");
 		// Act 
-		Serveur serv = new Serveur();
+		Restaurant rest = new Restaurant(4); 
+		Serveur serv = new Serveur(); // ETANT DONNE un serveur
+		rest.recruterServeur(serv);
+		rest.assignerTable(serv, rest.get_aoTables().get(0));
+		rest.assignerTable(serv, rest.get_aoTables().get(1));
+		serv.prendCommande(new Commande(100,true, null), rest.get_aoTables().get(0));// alors son chiffre d'affaire est la somme des deux commandes
+		
 		// Arrange 
-		serv.prendCommande(new Commande(100));
-		serv.prendCommande(new Commande(100));
+		serv.prendCommande(new Commande(100,true, null), rest.get_aoTables().get(0));
 		// Assert 
 		assertEquals(200, serv.getdChiffreAffaire());
 	}

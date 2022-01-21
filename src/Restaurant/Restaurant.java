@@ -146,18 +146,19 @@ public class Restaurant {
 	 * Permet de récupérer auprès des servuers les commandes à transmettre à la gendarmerie
 	 */
 	public void recupererCommandesATransmettre() {
-		System.out.println("Restaurant Class: recupererTableATransmettre()");
+		System.out.println("Restaurant Class: recupererCommandesATransmettre()");
 		// Pour chaque serveur
 		for(Serveur ser : _aoServeurs) {
 			// On regarde ces commandes
-			for(Commande com: ser.get_aoCcommandes()) {
+//			for(Commande com: ser.get_aoCcommandes()) {
+			for(Commande com: ser.getAllCommandes()) {
 				if(com.bATransmettre()) {
 					// si elles sont à transmettre on les ajoute à la liste
 					_aoCommandeATransmettre.add(com);
 				}
 			}
-			
 		}
+		System.out.println("Les commandes à transmettre sont: "+_aoCommandeATransmettre);
 	}
 	/**
 	 * Permet de transmettre les commandes à la gendarmerie en 
@@ -167,6 +168,8 @@ public class Restaurant {
 		for(Commande com : _aoCommandeATransmettre) {
 			com.set_bTransmiste(true);
 		}
+		// on remet la liste la liste à vide 
+		_aoCommandeATransmettre = new ArrayList<Commande>();
 	}
 	/**
 	 * Renvoi une liste de table libres

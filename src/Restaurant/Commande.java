@@ -9,17 +9,25 @@ public class Commande {
 	private Date _dDateEpinglage;
 	private boolean _bTransmiste = false;
 	private boolean _bNourriture; // true si la commande concerne de la nourriture, false sinon.
+	private Menu _contenuCommande;
+	
 	
 	// - - - - - Constructors - - - - - //
-	public Commande(double _montant) {
-		_dMontantTotal = _montant;
-	}
-	public Commande(boolean _bNourriture) {
-		this._bNourriture = _bNourriture;
-	}
+//	public Commande(double _montant) {
+//		_dMontantTotal = _montant;
+//	}
+//	public Commande(boolean _bNourriture) {
+//		this._bNourriture = _bNourriture;
+//	}
 	public Commande(double _montant, boolean _bNourriture) {
 		_dMontantTotal = _montant;
 		this._bNourriture = _bNourriture;
+		_contenuCommande = null;
+	}
+	public Commande(double _montant, boolean _bNourriture, Menu menu) {
+		_dMontantTotal = _montant;
+		this._bNourriture = _bNourriture;
+		_contenuCommande = menu;
 	}
 	
 	// - - - - - GETTERS && SETTERS - - - - - //	
@@ -33,6 +41,7 @@ public class Commande {
 		return _bEpinglee;
 	}
 	public void set_bEpinglee(boolean _bEpinglee) {
+		_dDateEpinglage = new Date();
 		this._bEpinglee = _bEpinglee;
 	}	
 	public void set_bEpingleAUneDate(boolean _bEpinglee, Date dateEpinglage) {
@@ -57,7 +66,13 @@ public class Commande {
 	public void set_bNourriture(boolean _bNourriture) {
 		this._bNourriture = _bNourriture;
 	}
-	
+	public Menu get_contenuCommande() {
+		return _contenuCommande;
+	}
+	public void set_contenuCommande(Menu _contenuCommande) {
+		this._contenuCommande = _contenuCommande;
+	}
+
 	// - - - - - Methods - - - - - //
 	/**
 	 * Propriété calculé: Calcul si la date d'épinglage est dépassée de 15 jours

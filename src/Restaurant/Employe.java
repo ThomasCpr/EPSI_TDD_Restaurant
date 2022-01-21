@@ -28,15 +28,21 @@ public class Employe {
 	
 	
 	public void assignerTable(Table t) {
-		System.out.println("\nEmploye Class: assignerTable(Table "+t+") ");		
+		System.out.println("Employe Class: assignerTable(Table "+t+") ");		
 		// si la table ne possède pas déjà un serveur  d'assigné
 		if(t.get_oEmployeAssigne() == null) {
 			this._aoTables.add(t); // on assigne la table a l'employe
 			t.set_oEmployeAssigne(this); // on assigne l'employe à la table
+			System.out.println("\tAssignation de la table "+t+" à employé "+this+"");
 		}
 	}
-	
+	/**
+	 * Permet de savoir si un employé possède la table comme lui étant assignée
+	 * @param tableAVerifier
+	 * @return true si elle fait partie de la liste des tables qui lui sont assignées, false sinon.
+	 */
 	public boolean possedeLaTableAssignee(Table tableAVerifier) {
+		System.out.println(("Employe Class: possedeLaTableAssignee("+tableAVerifier+")"));
 		// si l'employee possède des tables assignées
 		if(!(_aoTables.isEmpty())) {
 			for(Table t : _aoTables) {
@@ -50,7 +56,7 @@ public class Employe {
 	}
 	
 	public void desassignerUneTable(Table tableASupprimer) {
-		System.out.println("\nEmploye Class: desassignerUneTable(Table "+tableASupprimer+")");
+		System.out.println("Employe Class: desassignerUneTable(Table "+tableASupprimer+")");
 		// est ce que la table était assignées à cet employee? 
 		if (tableASupprimer.get_oEmployeAssigne().equals(this)) {
 			// OUI - on la supprime de la liste des tables de l'employe
@@ -71,5 +77,7 @@ public class Employe {
 		}
 	}
 	
-
+	public Table getSpecificTable(Table t) {
+		return _aoTables.get(_aoTables.indexOf(t));
+	}
 }

@@ -107,26 +107,6 @@ SCOPE Commande
 //////////////// SCOPES SUPPLEMENTAIRES ////////////////
 
 
-SCOPE MENU: 
-// 21) va permettre de tester la partie stock
-	ETANT DONNE un serveur dans un restaurant ayant pris une commande
-	QUAND la cuisine refuse la commande faute de stocks 
-	ALORS le plat en rupture n apparait plus sur la carte du restaurant
-
-	ETANT DONNE un serveur dans un  restaurant ayant pris une commande
-	QUAND la cuisine refuse la commande faute de stocks 
-	ET que le client accepte le remplacement
-	ET que le prix du nouveau plat 
-	ALORS le prix de la nouvelle commande est égale au prix du plat d origine 
-
-
-
-	ETANT DONNE
-	QUAND
-	ALORS
-
-
-
 	SCOPE COMMANDE:
 // 21) va permettre de lever le problème qu'un serveur peut prendre une commande
 //  alors qu'il n'a pas de table assignée
@@ -140,7 +120,50 @@ SCOPE MENU:
 	ETANT DONNE un serveur dans un restaurant ayant pris une commande auprès d un client
 	QUAND il prend une autre commande de la part du même client 
 	ALORS le total de la commande est la somme des deux commandes
-
+// 23)
 	ETANT DONNE un serveur dans un restaurant ayant pris une commande de nourriture auprès d un client
 	QUAND il prend une commande de boisson de la part du même client
 	ALORS le total de la commande est bien la somme des deux commandes
+
+
+
+
+
+SCOPE MENU: 
+// ) va permettre de tester la partie stock
+	ETANT DONNE un serveur dans un restaurant ayant pris une commande
+	QUAND la cuisine refuse la commande faute de stocks 
+	ALORS le plat en rupture n apparait plus sur la carte du restaurant
+
+	ETANT DONNE un serveur dans un  restaurant ayant pris une commande
+	QUAND la cuisine refuse la commande faute de stocks 
+	ET que le client accepte le remplacement
+	ET que le prix du nouveau plat 
+	ALORS le prix de la nouvelle commande est égale au prix du plat d origine 
+
+	ETANT DONNE un plat dans un Restaurant
+	QUAND la cuisine refuse une commande concernant ce plat
+	ALORS le plat n apparait plus sur un
+
+	ETANT DONNE
+	QUAND
+	ALORS
+
+
+TODO: 
+- Finir de corriger les effets de bord de prendreCommande().
+- implémenter les scopes suivant
+- Mourir vieux mais pas trop
+
+
+
+QUESTIONS:
+Mon code m'oblige à devoir instancier un restaurant, y ajouter mon serveur, et lui assigner une table.
+Donc chaque beaucoup de test possèdent une instanciation: Restaurant, Serveur , Commande (un peu moins)
+C'est la partie factoriser que j'ai loupé
+
+2)
+Vaut-il mieux que jeé fasse un constructeur supplémentaire avec moins de paramètre ? 
+-> Risque de mauvaisze utilisation par prochain dev etc 
+Ou que je passe null si ça ne concerne pas le tests unitaire ? 
+Commande com = new Commande(100, true, null);

@@ -44,6 +44,20 @@ public class Franchise {
 		}
 	}
 	
+	/**
+	 * Constructeur avec un nombre de restaurant et leur nombre de table pour simplifier le test franchise
+	 * @param nombreRestaurants le nombre de restaurant de la franchise
+	 * @param nbTableParRestaurant le nombre de tables par restaurant
+	 */
+	public Franchise(int nombreRestaurants, int nbTableParRestaurant) {
+		super();
+		_aoRestaurants = new ArrayList<Restaurant>();
+		_aoMenuFranchise = new ArrayList<Menu>();
+		for(int i = 0; i < nombreRestaurants; i++) {
+			_aoRestaurants.add(new Restaurant(nbTableParRestaurant));
+		}
+	}
+	
 	// - - - - - GETTERS && SETTERS - - - - - //
 	public ArrayList<Restaurant> get_aoRestaurants() {
 		return _aoRestaurants;

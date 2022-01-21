@@ -2,8 +2,7 @@ package TestPackage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
-import java.util.Collections;
+
 
 import org.junit.jupiter.api.Test;
 
@@ -20,39 +19,45 @@ public class test_Restaurant {
 		void testChiffreAffaireRestaurant() {
 			System.out.println("_____TEST_____ : testChiffreAffaireRestaurant()"); 
 			// Act
-			double y = 1.0;
-			Restaurant resto_1 = new Restaurant(0);
+			double dMontant = 1.0;
+			int nbServeur = 0;
+			// Cas X = 0
+			Restaurant resto_1 = new Restaurant(nbServeur); // (il faut au moins le même nombre de table que de serveurs)
+			assertEquals(dMontant*nbServeur,resto_1.chiffreAffaire());
 			
-			Restaurant resto_2 = new Restaurant(1);
-			resto_2.get_aoServeurs().add(new Serveur());
+			// Cas X = 1	
+			nbServeur = 1;
+			Restaurant resto_2 = new Restaurant(nbServeur);
+			Serveur s = new Serveur();
+			resto_2.recruterServeur(s);
+			resto_2.assignerTable(s, resto_2.get_aoTables().get(0));
+			s.prendCommande(new Commande(dMontant,false), resto_2.get_aoTables().get(0));
+			assertEquals(dMontant*nbServeur,resto_2.chiffreAffaire());
 			
-			Restaurant resto_3 = new Restaurant(2);			
-			resto_3.get_aoServeurs().add(new Serveur());
-			resto_3.get_aoServeurs().add(new Serveur());
+			// Cas X = 2
+			nbServeur = 2;
+			Restaurant resto_3 = new Restaurant(nbServeur);
+			for(int i = 0; i<nbServeur; i++) {
+				Serveur serveur = new Serveur();
+				resto_3.recruterServeur(serveur);
+				resto_3.assignerTable(serveur, resto_3.get_aoTables().get(i));
+				// Arrange
+				serveur.prendCommande(new Commande(dMontant, false), resto_3.get_aoTables().get(i));
+			}
+				// Assert
+			assertEquals(dMontant*nbServeur,resto_3.chiffreAffaire());
+			// Cas X = 100
+			nbServeur = 100;
+			Restaurant resto_4 = new Restaurant(nbServeur);
+			for(int i = 0; i<nbServeur; i++) {
+				Serveur serveur = new Serveur();
+				resto_4.recruterServeur(serveur);
+				resto_4.assignerTable(serveur, resto_4.get_aoTables().get(i));
+				serveur.prendCommande(new Commande(dMontant, false), resto_4.get_aoTables().get(i));
+			}
+				// Assert
+			assertEquals(dMontant*nbServeur ,resto_4.chiffreAffaire() );
 
-			Restaurant resto_4 = new Restaurant(100);
-			for(int i = 0 ; i<100; i++) {
-				resto_4.get_aoServeurs().add(new Serveur());
-			}
-			
-			// Arrange 
-			for(Serveur s : resto_2.get_aoServeurs()) {
-				s.prendCommande(new Commande(y));
-			}
-			
-			for(Serveur s : resto_3.get_aoServeurs()) {
-				s.prendCommande(new Commande(y));
-			}
-			
-			for(Serveur s : resto_4.get_aoServeurs()) {
-				s.prendCommande(new Commande(y));
-			}
-			
-			// Assert
-			assertEquals(0.0,resto_1.chiffreAffaire()); // vaut-il mieux faire des valeurs dure ou var ? 
-			assertEquals(1.0,resto_2.chiffreAffaire());
-			assertEquals(2.0,resto_3.chiffreAffaire());
-			assertEquals(100.0 ,resto_4.chiffreAffaire() );
 		}
 		
 		/**
