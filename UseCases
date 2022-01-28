@@ -112,7 +112,7 @@ SCOPE Commande
 //  alors qu'il n'a pas de table assignée
 	ETANT DONNE un serveur dans un restaurant sans table assignée
 	QUAND il prend une commande de nourriture
-	ALORS la commande n apparait pas les tâches de la cuisine de ce restaurant
+	ALORS la commande n apparait pas dans les tâches de la cuisine de ce restaurant
 
 
 // 22) va permettre de lever le problème qu'une commande n'est pas assigné à une table/client
@@ -127,43 +127,21 @@ SCOPE Commande
 
 
 
-
-
 SCOPE MENU: 
-// ) va permettre de tester la partie stock
+// 24)  va permettre de tester la partie stock
+// On considère qu'un menu possède plusieurs plats
 	ETANT DONNE un serveur dans un restaurant ayant pris une commande
 	QUAND la cuisine refuse la commande faute de stocks 
 	ALORS le plat en rupture n apparait plus sur la carte du restaurant
 
+
+
+SCOPE Commande
+// 25) Permet de vérifier que le prix d'une commande dont le plat est remplacé est toujorus le bon
 	ETANT DONNE un serveur dans un  restaurant ayant pris une commande
 	QUAND la cuisine refuse la commande faute de stocks 
 	ET que le client accepte le remplacement
-	ET que le prix du nouveau plat 
-	ALORS le prix de la nouvelle commande est égale au prix du plat d origine 
-
-	ETANT DONNE un plat dans un Restaurant
-	QUAND la cuisine refuse une commande concernant ce plat
-	ALORS le plat n apparait plus sur un
-
-	ETANT DONNE
-	QUAND
-	ALORS
+	ET que la différence de prix du nouveau plat est inférieur au pourcentage fixé par le gérant
+	ALORS le prix du nouveau plat est égale au prix du plat d origine 
 
 
-TODO: 
-- Finir de corriger les effets de bord de prendreCommande().
-- implémenter les scopes suivant
-- Mourir vieux mais pas trop
-
-
-
-QUESTIONS:
-Mon code m'oblige à devoir instancier un restaurant, y ajouter mon serveur, et lui assigner une table.
-Donc chaque beaucoup de test possèdent une instanciation: Restaurant, Serveur , Commande (un peu moins)
-C'est la partie factoriser que j'ai loupé
-
-2)
-Vaut-il mieux que jeé fasse un constructeur supplémentaire avec moins de paramètre ? 
--> Risque de mauvaisze utilisation par prochain dev etc 
-Ou que je passe null si ça ne concerne pas le tests unitaire ? 
-Commande com = new Commande(100, true, null);

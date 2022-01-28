@@ -2,11 +2,10 @@ package TestPackage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 
 import Restaurant.Commande;
@@ -34,11 +33,11 @@ public class test_Commandes {
 	 */
 	@Test 
 	void testEpinglageCommande() {
-		System.out.println("\n_____TEST_____ : testEpinglageCommande()");
+		System.out.println("_____TEST_____ : testEpinglageCommande()");
 		// Act
 		Restaurant rest = new Restaurant(3);
 		Serveur serv = new Serveur(); // etant donne un serveur
-		Commande c = new Commande(10, false, null);
+		Commande c = new Commande();
 		rest.assignerTable(serv, rest.get_aoTables().get(1));
 		serv.prendCommande(c,rest.get_aoTables().get(1)); // ayant pris une commande
 		// Arrange 
@@ -52,13 +51,13 @@ public class test_Commandes {
 	 */
 	@Test
 	void testEpinglageDepuisQuinzeJour() {
-		System.out.println("\n_____TEST_____ : testEpinglageDepuisQuinzeJour()");
+		System.out.println("_____TEST_____ : testEpinglageDepuisQuinzeJour()");
 		// Act
 		Restaurant rest = new Restaurant(3);
 		Serveur serv = new Serveur(); // etant donne un serveur
 		rest.recruterServeur(serv);
 		rest.assignerTable(serv, rest.get_aoTables().get(0));
-		Commande com = new Commande(10, false, null);
+		Commande com = new Commande();
 		serv.prendCommande(com, rest.get_aoTables().get(0)); // ayant pris une commande
 		// Arrange
 		serv.declarerCommandeNonPayee(com, dDateDepassee()); // qu'il a déclaré comme non-payée il y a au moins 15 jours
@@ -71,14 +70,14 @@ public class test_Commandes {
 	 */
 	@Test
 	void testcommandeATransmettreEstDansLaListe() {
-		System.out.println("\n_____TEST_____ : testcommandeATransmettreEstDansLaListe()"); 
+		System.out.println("_____TEST_____ : testcommandeATransmettreEstDansLaListe()"); 
 		// Act 
 		Restaurant rest = new Restaurant(3); // soit un restaurant
 		Serveur serv = new Serveur();
 		Table tableQuiNePaieraPasSacommande = rest.get_aoTables().get(0) ;
 		rest.recruterServeur(serv); //  avec un serveur
 		rest.assignerTable(serv, tableQuiNePaieraPasSacommande);
-		Commande com = new Commande(10, false, null); // et une commande
+		Commande com = new Commande(); // et une commande
 		
 		// Arrange
 		serv.prendCommande(com, tableQuiNePaieraPasSacommande); 
@@ -93,11 +92,11 @@ public class test_Commandes {
 	 * Test 13) vérifie que les commandes transmisent n'apparaissent plus dans les commandes à transmettre
 	 */
 	@Test void testPresenceCommandeTransmiseApresTransmission() {
-		System.out.println("\n_____TEST_____ : testPresenceCommandeTransmiseApresTransmission()");
+		System.out.println("_____TEST_____ : testPresenceCommandeTransmiseApresTransmission()");
 		// Act 
 		Restaurant rest = new Restaurant(5); // etant donné un restaurant
 		Serveur serv = new Serveur();
-		Commande com = new Commande(100, true, null);
+		Commande com = new Commande();
 		rest.recruterServeur(serv); 
 		rest.assignerTable(serv, rest.get_aoTables().get(2));
 		serv.prendCommande(com, rest.get_aoTables().get(2)); // et un serveur ayant pris une commande
@@ -115,7 +114,7 @@ public class test_Commandes {
 	 */
 	@Test
 	void testAjoutDeTacheALaCuisine() {
-		System.out.println("\n_____TEST_____ : testAjoutDeTacheALaCuisine()");
+		System.out.println("_____TEST_____ : testAjoutDeTacheALaCuisine()");
 		// Act 
 		Serveur serv = new Serveur();
 		Restaurant rest = new Restaurant(3); // etant donné un serveur
@@ -123,7 +122,8 @@ public class test_Commandes {
 		rest.assignerTable(serv,rest.get_aoTables().get(2) );
 
 		// Arrange
-		Commande com = new Commande(100,true, new Menu("Menu Burger", Map.of("Burger vegan lol", 200.0) ));   
+		rest.createMenu("Menu Burger","Burger vegan", 200.0);
+		Commande com = new Commande(rest.get_aoMenuRestaurant().get(0).getPlatByName("Burger vegan"));   
 		serv.prendCommande(com, rest.get_aoTables().get(2));// QUAND il prend une commande de nourriture
 		
 		// Assert
@@ -136,7 +136,7 @@ public class test_Commandes {
 	 */
 	@Test 
 	void testPriseDeCommandeSansAjoutTacheCuisine() {
-		System.out.println("\n_____TEST_____ : testPriseDeCommandeSansAjoutTacheCuisine()");
+		System.out.println("_____TEST_____ : testPriseDeCommandeSansAjoutTacheCuisine()");
 		// Act 
 		Serveur serv = new Serveur(); // ETANT donné un serveur 
 		Restaurant rest = new Restaurant(3); // dans un restaurant 
@@ -144,7 +144,7 @@ public class test_Commandes {
 		Table t =  rest.get_aoTables().get(1);
 		rest.assignerTable(serv,t);
 		// Arrange 
-		Commande com = new Commande(20, false, null); 
+		Commande com = new Commande(20, false); 
 		serv.prendCommande(com,t ); // QUAND il prend une commande de boissons
 		
 		// Assert
@@ -155,14 +155,17 @@ public class test_Commandes {
 	 */
 	@Test
 	void testCommandeEstBienAUneTableDuServeur() {
-		System.out.println("\n_____TEST_____ : testCommandeEstBienAUneTableDuServeur()");
+		System.out.println("_____TEST_____ : testCommandeEstBienAUneTableDuServeur()");
 		// Act 
-		
-		
+		Serveur serv = new Serveur(); // ETANT DONNE un serveur 
+		Restaurant rest = new Restaurant(5); // dans un restaurant 
+		rest.recruterServeur(serv); // Sans table assignées
 		// Arrange 
-		
+		Commande commande_non_presente_en_cuisine = new Commande(100, true); 
+		Table table = new Table();
+		serv.prendCommande(commande_non_presente_en_cuisine, table); // quand il prend un commande de nourriture 
 		// Assert
-		
+		assertEquals(false, rest.get_oCuisine().get_aoCommandes().contains(commande_non_presente_en_cuisine)); // ALORS la commande n'apparait pas dans les tâches de la cuisine du r estaurant
 		
 	}
 	
@@ -171,7 +174,7 @@ public class test_Commandes {
 	 */
 	@Test
 	void testTotalCommandeTable() {
-		System.out.println("\n_____TEST_____ : testTotalCommandeTable()");
+		System.out.println("_____TEST_____ : testTotalCommandeTable()");
 		// ACT 
 		Serveur serv= new Serveur(); // ETANT donné un serveur
 		Restaurant rest = new Restaurant(5); // dans un restaurant
@@ -188,5 +191,55 @@ public class test_Commandes {
 		// Assert
 		assertEquals(110,  tableQuiCommande.get_TotalTable()); //  ALROS le total de la command est la somme des deux commandes
 	}
+	
+	/**
+	 * Test 23) Permet de vérifier que le total d'une table est bien la somme des commandes passées
+	 * Qu'elles soient de boissons ou de nourriture
+	 */
+	@Test
+	void testTotalCommandesVarieesTable() {
+		System.out.println("_____TEST_____ : testTotalCommandesVarieesTable()");
+		// ACT 
+		Restaurant rest = new Restaurant(5, 2, 0.2);  
+		Table tableQuiCommande = rest.get_aoTables().get(2);
+		Serveur serv = rest.get_aoServeurs().get(0); // ETANT donné un serveur dans un restaurant
+		rest.assignerTable(serv, tableQuiCommande);
+				
+		// Arrange
+		Commande commande1 = new Commande(100, false); 
+		serv.prendCommande(commande1, tableQuiCommande);// ayant pris une commande de nourriture auprès d'un client
+		
+		Commande commande2 = new Commande(10, true ); // QUand il prend une commande de boisson de la part du même client
+		serv.prendCommande(commande2, tableQuiCommande);
+		
+		// Assert
+		assertEquals(110,  tableQuiCommande.get_TotalTable()); //  ALORS le total de la commande est la somme des deux commandes
+	}
+	
+	/**
+	 * Test 25) Permet de vérifier que le prix d'une commande dont le plat est remplacé est toujours le bon
+	 */
+	@Test
+	void testPrixCommandeRemplacee() {
+		System.out.println("_____TEST_____ : testPrixCommandeRemplacee()");
+		// ACT 
+		Restaurant rest = new Restaurant(10, 2, 0.2);
+		Menu menu_herbes = new Menu("Menu aux herbes", "Poulet aux herbes", 10);
+		rest.addMenuCarte(menu_herbes);
+		rest.addPlatToMenu("Menu aux herbes", "Herbe au poulet", 12);
+		
+		Serveur serv = rest.get_aoServeurs().get(1);  // ETANT DONNE un serveur 
+		rest.assignerTable(serv, rest.get_aoTables().get(0)); // dans un restaurant
+		Commande commande_poulet = new Commande(rest.get_aoMenuRestaurant().get(0).getPlatByName("Poulet aux herbes")); // Ayant pris une commande
+		serv.prendCommande(commande_poulet, rest.get_aoTables().get(0));
+		
+		// Arrange
+		rest.get_oCuisine().refuseCommande(commande_poulet,"Poulet aux herbes"); // QUAND la cuisine refuse la commande faute de stocks
+		rest.proposerPlatRemplacement(commande_poulet, "Poulet aux herbes",  "Herbe au poulet");  // ET QUE LE client accepte le plat de remplacement
+		
+		// Assert
+		assertEquals(10, commande_poulet.getPlatByName("Herbe au poulet").getdPrix()); //  ALORS le prix du nouveau plat est égale au prix du plat d orgine 
+	}
+	
 	
 }

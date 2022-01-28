@@ -9,14 +9,16 @@ public class Serveur extends Employe {
 	// - - - - - Attributes - - - - - // 
 	
 	private double _dChiffreAffaire = 0.0;
-//	private ArrayList<Commande> _aoCcommandes;
 	private Cuisine _oCuisine;
 	
 	
 	// - - - - - Constructors - - - - - //
 	public Serveur() {
 		super();
-//		_aoCcommandes = new ArrayList<Commande>();
+	}
+	public Serveur(Cuisine cuisine) {
+		super();
+		_oCuisine = cuisine;
 	}
 	
 	// - - - - - GETTERS && SETTERS - - - - - //
@@ -34,6 +36,11 @@ public class Serveur extends Employe {
 	}
 
 	// - - - - - METHODS - - - - - //
+	/**
+	 * Permet au serveur de prendre une commande
+	 * @param commande la commande prise par le serveur
+	 * @param table, la table (équivalent client) passant la commande 
+	 */
 	public void prendCommande(Commande commande,Table table) {
 		System.out.println("Serveur Class: prendCommande("+commande+", "+table+")");
 		// on vérifie que la table est bien assignée au serveur
@@ -49,7 +56,12 @@ public class Serveur extends Employe {
 			_dChiffreAffaire +=commande.get_dMontantTotal();
 		}
 	}
-
+	
+	
+	/**
+	 * Permet de récuperer toutes les commandes d'un serveur
+	 * @return ArrayList<Commande> la liste des commandes
+	 */
 	public ArrayList<Commande>  getAllCommandes(){
 		ArrayList<Commande> allCommandes = new ArrayList<Commande>();
 		// on parcourt toutes les tables du serveur
@@ -102,5 +114,5 @@ public class Serveur extends Employe {
 		}
 		return com;
 	}
-	
+
 }

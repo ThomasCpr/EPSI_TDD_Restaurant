@@ -1,44 +1,74 @@
 package Restaurant;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class Menu {
 	// - - - - - Attributes - - - - - // 
 	private String _sName; // nom du menu
-	private Map<String, Double> _msdPlatsDuMenu; // une liste de plat, un plat étant une association nom/prix
+	private ArrayList<Plat> _aoPlatsDuMenu; // une liste de plat, un plat étant une association nom/prix
 	
 	// - - - - - Constructors - - - - - //
 	public Menu(String _sName) {
 		this._sName = _sName;
-		_msdPlatsDuMenu = new HashMap<String,Double>();
+		_aoPlatsDuMenu = new ArrayList<Plat>();
 	}
 	
-	public Menu(String _sName, Map<String, Double> _platsDuMenu) {
+	public Menu(String _sName, String sPlatName, double dPrixPlat) {
 		super();
 		this._sName = _sName;
-		this._msdPlatsDuMenu = _platsDuMenu;
+		this._aoPlatsDuMenu = new ArrayList<Plat>();
+		addPlatToMenu(sPlatName, dPrixPlat);
 	}
 	
-	// - - - - - Methods - - - - - //
+	
+	// - - - - - GETTERS && SETTERS - - - - - //
 	public String get_sName() {
 		return _sName;
 	}
-	public Map<String, Double> get_msdPlatsDuMenu() {
-		return _msdPlatsDuMenu;
+	public ArrayList<Plat> get_aoPlatsDuMenu() {
+		return _aoPlatsDuMenu;
 	}
-	public void set_msdPlatsDuMenu(Map<String, Double> _platsDuMenu) {
-		this._msdPlatsDuMenu = _platsDuMenu;
+	public void set_aoPlatsDuMenu(ArrayList<Plat> _platsDuMenu) {
+		this._aoPlatsDuMenu = _platsDuMenu;
 	}
 	public void set_sName(String _sName) {
 		this._sName = _sName;
 	}
-
+	// - - - - - METHODS - - - - - //
+	
+	/**
+	 * Permet d'ajouter un plat et son prix au menu
+	 * @param sNomPlat
+	 * @param dPrix
+	 */
+	public void addPlatToMenu(String sNomPlat, double dPrix) {
+		System.out.println("Le plat '"+sNomPlat+"' va être ajouté au menu '"+this._sName+"' pour : "+dPrix+"€.");
+		this._aoPlatsDuMenu.add(new Plat(sNomPlat, dPrix));
+	}
+	
+	/**
+	 * Permet de récuper un objet plat grâce à son nom
+	 * @param sNomPlat le nom du plat à récupérer 
+	 * @return le plat cherché ou null si celui ci n'existe pas
+	 */
+	public Plat getPlatByName(String sNomPlat) {
+		Plat platARetourner = null;
+		// on parcourt tous les plats 
+		for(Plat plat: get_aoPlatsDuMenu()) {
+			if(plat.getsNom() == sNomPlat) {
+				platARetourner = plat;
+			}
+		}
+		return platARetourner;
+	}
+	
+	
 	@Override
 	public String toString() {
-		return "Menu [_sName=" + _sName + ", _msdPlatsDuMenu=" + _msdPlatsDuMenu + "]";
+		return "Menu [_sName=" + _sName + ", _aoPlatsDuMenu=" + _aoPlatsDuMenu + "]";
 	}
+	
 	
 	
 

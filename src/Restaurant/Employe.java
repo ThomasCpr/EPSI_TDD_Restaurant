@@ -3,10 +3,10 @@ package Restaurant;
 import java.util.ArrayList;
 
 public class Employe {
-	
+	// - - - - - Attributes - - - - - //
 	private ArrayList<Table> _aoTables;
 
-
+	// - - - - - Constructors - - - - - //
 	public Employe() {
 		super();
 		_aoTables = new ArrayList<Table>();
@@ -15,18 +15,23 @@ public class Employe {
 	public Employe(ArrayList<Table> tables) {
 		_aoTables = tables;
 	}
+	
+	// - - - - - GETTERS && SETTERS - - - - - //
 	public ArrayList<Table> get_aoTables() {
 		return _aoTables;
 	}
-
 	public void set_aoTables(ArrayList<Table> _aoTables) {
 		this._aoTables = _aoTables;
 	}
-		
+
+	// - - - - - METHODS - - - - - //
 	public int nbTableAffectees() {
 		return _aoTables.size();	}
 	
-	
+	/**
+	 * Assigne une table à l'employé seulement si la table est libre
+ 	 * @param t la table à assigner
+	 */
 	public void assignerTable(Table t) {
 		System.out.println("Employe Class: assignerTable(Table "+t+") ");		
 		// si la table ne possède pas déjà un serveur  d'assigné
@@ -36,6 +41,7 @@ public class Employe {
 			System.out.println("\tAssignation de la table "+t+" à employé "+this+"");
 		}
 	}
+	
 	/**
 	 * Permet de savoir si un employé possède la table comme lui étant assignée
 	 * @param tableAVerifier
@@ -54,7 +60,11 @@ public class Employe {
 		}	
 		return false;
 	}
-	
+	/**
+	 * Permet de désassigner une table d'un employé en mettant la liste des table de l'employé à jour
+	 * mais aussi en mettant la table en question à jour
+	 * @param tableASupprimer
+	 */
 	public void desassignerUneTable(Table tableASupprimer) {
 		System.out.println("Employe Class: desassignerUneTable(Table "+tableASupprimer+")");
 		// est ce que la table était assignées à cet employee? 

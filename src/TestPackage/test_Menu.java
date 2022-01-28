@@ -2,10 +2,13 @@ package TestPackage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
 import Restaurant.Commande;
+import Restaurant.Cuisine;
 import Restaurant.Franchise;
 import Restaurant.Restaurant;
 import Restaurant.Serveur;
@@ -22,8 +25,7 @@ public class test_Menu {
 		Restaurant rest = new Restaurant(5); // etant donné un restaurant
 		Franchise fran = new Franchise(); 
 		fran.get_aoRestaurants().add(rest); // ayant le statut de filiale d'une franchise
-		fran.createMenu("Menu Burger"); // la franchise définissant un menu 
-		fran.addPlatToMenu("Menu Burger", "Burger pour obèse",10 ); // //  ayant un plat
+		fran.createMenu("Menu Burger", "Burger pour obèse",10); // la franchise définissant un menu ayant un plat 
 		
 		// Arrange
 		double dNouveauPrixDefinieParFranchise = 8; 
@@ -31,7 +33,7 @@ public class test_Menu {
 		
 		// Assert 
 		// ALORS le prix du plat dans le menu du restaurant est celui défini par la franchise
-		assertEquals(dNouveauPrixDefinieParFranchise, rest.get_aoMenuRestaurant().get(rest.get_iIndexMenuByName("Menu Burger")).get_msdPlatsDuMenu().get("Burger pour obèse"));
+		assertEquals(dNouveauPrixDefinieParFranchise, rest.getMenuByName("Menu Burger").getPlatByName("Burger pour obèse").getdPrix());
 	}
 	
 	/**
@@ -40,24 +42,22 @@ public class test_Menu {
 	@Test void testModificatioPrixPlatNiveauRestaurant() {
 		System.out.println("_____TEST_____ : testModificatioPrixPlatNiveauRestaurant()");
 		// Act 
-		String sMenuFran, sMenuRest, sPlat;
-		sMenuFran = "Menu du jour";
-		sMenuRest = "Menu burger";
-		sPlat = "Burger";
+		String sNomMenuFran, sNomMenuRest, sNomPlat;
+		sNomMenuFran = "Menu du jour";
+		sNomMenuRest = "Menu burger";
+		sNomPlat = "Burger";
 		Restaurant rest = new Restaurant(5); // Etant donne un restaurant 
 		Franchise fran = new Franchise(); 
 		fran.get_aoRestaurants().add(rest); // appartenant à une franchise
-		rest.createMenu(sMenuRest); // le restaurant définissant un menu ayant un plat
-		rest.addPlatToMenu(sMenuRest, sPlat, 8);
-		fran.createMenu(sMenuFran);  // la franchise définissant un menu ayant le même plat
-		fran.addPlatToMenu(sMenuFran, sPlat, 7);
+		rest.createMenu(sNomMenuRest,sNomPlat, 8); // le restaurant définissant un menu ayant un plat
+		fran.createMenu(sNomMenuFran,sNomPlat, 8);  // la franchise définissant un menu ayant le même plat
 		
 		// Arrange
-		fran.setPrixPlat(sMenuFran,sPlat, 7.5); // quand la franchise modifie le prix du plat
+		fran.setPrixPlat(sNomMenuFran,sNomPlat, 7.5); // quand la franchise modifie le prix du plat
 		
 		// Assert
 		// alors le prix du plat dans le menu du restaurant reste inchangé
-		assertEquals(8 , rest.get_aoMenuRestaurant().get(rest.get_iIndexMenuByName(sMenuRest)).get_msdPlatsDuMenu().get(sPlat));
+		assertEquals(8 , rest.getMenuByName(sNomMenuRest).getPlatByName(sNomPlat).getdPrix());
 	}
 
 	/**
@@ -72,35 +72,39 @@ public class test_Menu {
 		Restaurant rest = new Restaurant(); // ETANT DONNE un restaurant
 		Franchise fran = new Franchise(); 
 		fran.get_aoRestaurants().add(rest); // appartenant à une franchise
-		rest.createMenu(sNomMenu); // définissant un menu 
-		rest.addPlatToMenu(sNomMenu, "Entrecôte", dPrixPremierPlat); // ayant un plat
+		rest.createMenu(sNomMenu, "Entrecôte", dPrixPremierPlat); // définissant un menu ayant un plat 
 		
 		// Arrange  
 		fran.addPlatToMenu(sNomMenu, "Côtes de porc", dPrixDeuxiemePlat); // QUAND la franchise ajoute un nouveau plat
 		
 		// Assert 
-		assertEquals(dPrixPremierPlat, rest.get_aoMenuRestaurant().get(rest.get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu().get("Entrecôte"));
-		assertEquals(dPrixDeuxiemePlat, rest.get_aoMenuRestaurant().get(rest.get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu().get("Côtes de porc"));
+		assertEquals(dPrixPremierPlat, rest.getMenuByName(sNomMenu).getPlatByName("Entrecôte").getdPrix());
+		assertEquals(dPrixDeuxiemePlat, rest.getMenuByName(sNomMenu).getPlatByName("Côtes de porc").getdPrix());
 	}
 	
-//	/**
-//	 * Test 21) 
-//	 */
-//	@Test void testSuppressionPlatCarteSiFauteDeStock() {
-//		System.out.println("_____TEST_____ : testSuppressionPlatCarteSiFauteDeStock()");
-//		// Act 
-//		Restaurant rest = new Restaurant(5);
-//		Serveur serv = new Serveur();
-//		rest.recruterServeur(serv); // ETANT donné un serveur dans un restaurant
-//		Commande com = new Commande(50, true);
-//		serv.prendCommande(com); // ayant pris une commande
-//		// Arrange
-//		rest.get_oCuisine().refuseCommande(com); // quand la cuisine refuse la commande faute de stocks
-//		
-//		// assert
-//		assertEquals(false,rest.getPlats().contains(plats));
-//		
-//		
-//	}
+	/**
+	 * Test 24) Quand la cuisine déclare un plat en rupture alors il doit disparaitre de la carte du restaurant 
+	 */
+	@Test void testSuppressionPlatCarteSiFauteDeStock() {
+		System.out.println("_____TEST_____ : testSuppressionPlatCarteSiFauteDeStock()");
+		// Act 
+		Restaurant rest = new Restaurant(5, 2, 0.2); 
+		Menu menu_burger = new Menu("Menu Burger", "Burger vegan pour les relous", 15.0);
+		menu_burger.addPlatToMenu("Burger quintuple steak", 12.0);// on ajoute plusieurs plats au menu
+		Serveur serv = rest.get_aoServeurs().get(0);  // ETANT donné un serveur dans un restaurant
+		Cuisine cuisineRefusantLaCommande = rest.get_oCuisine(); 
+		rest.addMenuCarte(menu_burger);
+		
+		Commande com = new Commande(menu_burger.getPlatByName("Burger vegan pour les relous") );
+		serv.prendCommande(com, rest.get_aoTables().get(0)); // ayant pris une commande à une table
+		
+		// Arrange
+		cuisineRefusantLaCommande.refuseCommande(com, "Burger vegan pour les relous"); // quand la cuisine refuse la commande faute de stocks
+	
+		// assert
+		assertEquals(false,rest.getAllPlats().contains(menu_burger.getPlatByName("Burger vegan pour les relous"))); // ALORS le plat en rupture n'apparrait plus sur la carte du restaurant.
+	}
+	
+	
 
 }

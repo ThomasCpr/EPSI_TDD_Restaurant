@@ -1,5 +1,6 @@
 package Restaurant;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Commande {
@@ -9,26 +10,29 @@ public class Commande {
 	private Date _dDateEpinglage;
 	private boolean _bTransmiste = false;
 	private boolean _bNourriture; // true si la commande concerne de la nourriture, false sinon.
-	private Menu _contenuCommande;
-	
+	private ArrayList<Plat> _contenuCommande;
 	
 	// - - - - - Constructors - - - - - //
-//	public Commande(double _montant) {
-//		_dMontantTotal = _montant;
-//	}
-//	public Commande(boolean _bNourriture) {
-//		this._bNourriture = _bNourriture;
-//	}
+	public Commande() {
+		_dMontantTotal = 0;
+		this._bNourriture = false;
+		_contenuCommande = new ArrayList<Plat>();
+	}
+	
 	public Commande(double _montant, boolean _bNourriture) {
 		_dMontantTotal = _montant;
 		this._bNourriture = _bNourriture;
-		_contenuCommande = null;
+		_contenuCommande = new ArrayList<Plat>();
 	}
-	public Commande(double _montant, boolean _bNourriture, Menu menu) {
-		_dMontantTotal = _montant;
-		this._bNourriture = _bNourriture;
-		_contenuCommande = menu;
+	
+	public Commande(Plat oPlat) {
+		this._bNourriture = true;
+		_contenuCommande = new ArrayList<Plat>();	
+		_contenuCommande.add(oPlat);
+		_dMontantTotal= oPlat.getdPrix();
+		
 	}
+
 	
 	// - - - - - GETTERS && SETTERS - - - - - //	
 	public double get_dMontantTotal() {
@@ -66,10 +70,10 @@ public class Commande {
 	public void set_bNourriture(boolean _bNourriture) {
 		this._bNourriture = _bNourriture;
 	}
-	public Menu get_contenuCommande() {
+	public ArrayList<Plat> get_contenuCommande() {
 		return _contenuCommande;
 	}
-	public void set_contenuCommande(Menu _contenuCommande) {
+	public void set_contenuCommande(ArrayList<Plat> _contenuCommande) {
 		this._contenuCommande = _contenuCommande;
 	}
 
@@ -81,6 +85,22 @@ public class Commande {
 	public boolean bATransmettre() {
 		Date dToday = new Date(); // on prend la date du jour
 		return (differenceEnJours(dToday, this._dDateEpinglage ) > 15); // on regarde si ça fais plus de 15 jours
+	}
+	
+	/**
+	 * Permet de retourner un des plats de la commande en cherchant par son nom 
+	 * @param sNomPlat du plat recherché
+	 * @return le plat recherché ou null
+	 */
+	public Plat getPlatByName(String sNomPlat) {
+		Plat platARetourner = null;
+		// on parcourt tous les plats 
+		for(Plat plat: get_contenuCommande()) {
+			if(plat.getsNom().equals(sNomPlat)) {
+				platARetourner = plat;
+			}
+		}
+		return platARetourner;
 	}
 	
 	/**

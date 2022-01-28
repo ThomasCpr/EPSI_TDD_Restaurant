@@ -56,7 +56,7 @@ public class test_Franchise {
 				s.prendCommande(new Commande(dMontantCommande, false),r.get_aoTables().get(i));
 			}
 		}
-		
+		// prend beaucoup trop de temps .. .
 //		for(Restaurant r : f3.get_aoRestaurants()) {
 //			for(int i = 0; i<y3; i++) {
 //				Serveur s = new Serveur();

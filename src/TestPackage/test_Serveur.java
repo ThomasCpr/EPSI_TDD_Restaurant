@@ -37,7 +37,7 @@ public class test_Serveur {
 		rest.recruterServeur(serv);
 		rest.assignerTable(serv, rest.get_aoTables().get(0));
 		// Arrange 
-		serv.prendCommande(new Commande(100,true, null), rest.get_aoTables().get(0)); // QUAND il prend une nouvelle commande
+		serv.prendCommande(new Commande(100,false), rest.get_aoTables().get(0)); // QUAND il prend une nouvelle commande
 		// Assert 
 		assertEquals(100, serv.getdChiffreAffaire()); // alors son chiffre d'affaire est le montant de celle ci
 	}
@@ -53,10 +53,10 @@ public class test_Serveur {
 		rest.recruterServeur(serv);
 		rest.assignerTable(serv, rest.get_aoTables().get(0));
 		rest.assignerTable(serv, rest.get_aoTables().get(1));
-		serv.prendCommande(new Commande(100,true, null), rest.get_aoTables().get(0));// alors son chiffre d'affaire est la somme des deux commandes
+		serv.prendCommande(new Commande(100,false), rest.get_aoTables().get(0));// alors son chiffre d'affaire est la somme des deux commandes
 		
 		// Arrange 
-		serv.prendCommande(new Commande(100,true, null), rest.get_aoTables().get(0));
+		serv.prendCommande(new Commande(100,false), rest.get_aoTables().get(0));
 		// Assert 
 		assertEquals(200, serv.getdChiffreAffaire());
 	}

@@ -22,15 +22,7 @@ public class Franchise {
 		_aoRestaurants = new ArrayList<Restaurant>();
 		_aoMenuFranchise = new ArrayList<Menu>();
 	}
-	/**
-	 * Constructeur avec une liste de restaurant
-	 * @param restaurants
-	 */
-	public Franchise(ArrayList<Restaurant> restaurants) {
-		super();
-		this._aoRestaurants = restaurants;
-		_aoMenuFranchise = new ArrayList<Menu>();
-	}
+
 	/**
 	 * Constructeur avec un nombre de restaurant
 	 * @param nombreRestaurants
@@ -90,8 +82,8 @@ public class Franchise {
 	 * Permet la création d'un menu et l'ajoute aux différents resto de la franchise
 	 * @param _sName le nom du menu
 	 */
-	public void createMenu(String _sName) {
-		Menu menu = new Menu(_sName);
+	public void createMenu(String _sName,String sNomPlat, double dPrixPlat) {
+		Menu menu = new Menu(_sName,sNomPlat, dPrixPlat);
 		_aoMenuFranchise.add(menu);
 		// ajout au restaurants de la franchise
 		for(Restaurant rest : _aoRestaurants) {
@@ -108,50 +100,45 @@ public class Franchise {
 	 */
 	public void addPlatToMenu(String sNomMenu,String sNomPlat, double dPrix) { 
 		// on regarde si le menu existe auprès de la franchise
-		if(get_iIndexMenuByName(sNomMenu) !=-1) {
+		if(getMenuByName(sNomMenu) != null) {
 			// OUI - on ajoute le plat au menu de la franchise
-			_aoMenuFranchise.get(get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu().put(sNomPlat,dPrix);
+			getMenuByName(sNomMenu).get_aoPlatsDuMenu().add(new Plat(sNomPlat,dPrix));
 		}
 		else {
 			// NON - on en déduit que le plat est pour les menus des restaurants donc on ne creer pas le menu
 		}
-
 		// pour chaque restaurants
 		for(Restaurant rest: _aoRestaurants) {
 			// on ajoute le plat au menu du restaurants
-			rest.get_aoMenuRestaurant().get(rest.get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu().put(sNomPlat, dPrix);
+			rest.getMenuByName(sNomMenu).get_aoPlatsDuMenu().add(new Plat(sNomPlat, dPrix));
 		}
 		
 	}
 	
-	
 	/**
-	 * Renvoi le menu dont le nom est égale au paramètre sNameDuMenu (ici le nom d'un menu fait office de pseudo identifiant)
+	 * Permet la récuparation d'un menu par son nom. 
 	 * @param sNomDuMenu
-	 * @return l'index du menu, clairement de grosse faille sur cette méthode 
+	 * @return le menu dont le nom est égale au paramètre sNomDuMenu  
 	 */
-	public int get_iIndexMenuByName(String sNomDuMenu) {
-		int indexOf = -1; // par défaut non trouvé
+	public Menu getMenuByName(String sNomDuMenu) {
+		Menu menuRecherche = null;
+		
 		for(Menu menu : _aoMenuFranchise) {
 			if(menu.get_sName().equals(sNomDuMenu)) {
-				indexOf = _aoMenuFranchise.indexOf(menu);
+				menuRecherche = menu;
 			}
 		}
-		return indexOf;
+		return menuRecherche;
 	}
-	
+	/**
+	 * Fixe le prix d'un plat déjà présent sur la carte de la franchise tout 
+	 * @param sNomMenu
+	 * @param sNomPlat
+	 * @param dNouveauPrix
+	 */
 	public void setPrixPlat(String sNomMenu,String sNomPlat, double dNouveauPrix) {
 		System.out.println("Franchise Class: setPrixPlat(String "+sNomMenu+",String "+sNomPlat+", double "+dNouveauPrix+")");
 		// on récupère le menu de la franchise et on le met à jour au niveau de la franchise
-		System.out.println("\tAvant modification: "+_aoMenuFranchise.get(get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu());
-		_aoMenuFranchise.get(get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu().replace(sNomPlat, dNouveauPrix);
-//		_aoMenuFranchise.get(get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu().put(sNomPlat, dNouveauPrix);
-		System.out.println("\tAprès modification: "+_aoMenuFranchise.get(get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu());
-		// on le mets à jour au niveau des restaurants
-//		for(Restaurant rest: _aoRestaurants) {
-//			System.out.println("\tAvant modification: "+_aoMenuFranchise.get(get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu());
-//			rest.get_aoMenuRestaurant().get(rest.get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu().replace(sNomPlat, dNouveauPrix);
-//			System.out.println("\tAprès modification: "+rest.get_aoMenuRestaurant().get(rest.get_iIndexMenuByName(sNomMenu)).get_msdPlatsDuMenu());
-//		}
+		getMenuByName(sNomMenu).getPlatByName(sNomPlat).setdPrix(dNouveauPrix);
 	}
 }
