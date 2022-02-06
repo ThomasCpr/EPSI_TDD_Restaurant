@@ -9,11 +9,6 @@ public class Menu {
 	private ArrayList<Plat> _aoPlatsDuMenu; // une liste de plat, un plat étant une association nom/prix
 	
 	// - - - - - Constructors - - - - - //
-	public Menu(String _sName) {
-		this._sName = _sName;
-		_aoPlatsDuMenu = new ArrayList<Plat>();
-	}
-	
 	public Menu(String _sName, String sPlatName, double dPrixPlat) {
 		super();
 		this._sName = _sName;
@@ -29,12 +24,7 @@ public class Menu {
 	public ArrayList<Plat> get_aoPlatsDuMenu() {
 		return _aoPlatsDuMenu;
 	}
-	public void set_aoPlatsDuMenu(ArrayList<Plat> _platsDuMenu) {
-		this._aoPlatsDuMenu = _platsDuMenu;
-	}
-	public void set_sName(String _sName) {
-		this._sName = _sName;
-	}
+
 	// - - - - - METHODS - - - - - //
 	
 	/**

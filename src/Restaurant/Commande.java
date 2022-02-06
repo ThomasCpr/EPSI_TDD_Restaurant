@@ -52,30 +52,28 @@ public class Commande {
 		this._bEpinglee = _bEpinglee;
 		this._dDateEpinglage = dateEpinglage;	
 	}	
-	public Date get_dDateEpinglage() {
-		return _dDateEpinglage;
-	}
-	public void set_dDateEpinglage(Date _dDateEpinglage) {
-		this._dDateEpinglage = _dDateEpinglage;
-	}
-	public boolean is_bTransmiste() {
-		return _bTransmiste;
-	}
+
+//	public void set_dDateEpinglage(Date _dDateEpinglage) {
+//		this._dDateEpinglage = _dDateEpinglage;
+//	}
+//	public boolean is_bTransmiste() {
+//		return _bTransmiste;
+//	}
 	public void set_bTransmiste(boolean _bTransmiste) {
 		this._bTransmiste = _bTransmiste;
 	}
 	public boolean is_bNourriture() {
 		return _bNourriture;
 	}
-	public void set_bNourriture(boolean _bNourriture) {
-		this._bNourriture = _bNourriture;
-	}
+//	public void set_bNourriture(boolean _bNourriture) {
+//		this._bNourriture = _bNourriture;
+//	}
 	public ArrayList<Plat> get_contenuCommande() {
 		return _contenuCommande;
 	}
-	public void set_contenuCommande(ArrayList<Plat> _contenuCommande) {
-		this._contenuCommande = _contenuCommande;
-	}
+//	public void set_contenuCommande(ArrayList<Plat> _contenuCommande) {
+//		this._contenuCommande = _contenuCommande;
+//	}
 
 	// - - - - - Methods - - - - - //
 	/**

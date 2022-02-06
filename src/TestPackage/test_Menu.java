@@ -12,6 +12,7 @@ import Restaurant.Cuisine;
 import Restaurant.Franchise;
 import Restaurant.Restaurant;
 import Restaurant.Serveur;
+import Utilities.RestaurantBuilder;
 import Restaurant.Menu;
 
 public class test_Menu {
@@ -22,18 +23,19 @@ public class test_Menu {
 	@Test void testModificationPrixPlat(){
 		System.out.println("_____TEST_____ : testModificationPrixPlat()"); 
 		// Act
-		Restaurant rest = new Restaurant(5); // etant donné un restaurant
-		Franchise fran = new Franchise(); 
-		fran.get_aoRestaurants().add(rest); // ayant le statut de filiale d'une franchise
-		fran.createMenu("Menu Burger", "Burger pour obèse",10); // la franchise définissant un menu ayant un plat 
-		
+		String sNomPlat = "Burger pour obèse";
+		String sNomMenu = "Menu Burger";
+		Franchise fran = new Franchise(3,5,1,2.0); 
+		Restaurant rest = fran.get_aoRestaurants().get(0); // etant donné un restaurant
+		fran.createMenu(sNomMenu,sNomPlat ,10); // la franchise définissant un menu ayant un plat 
+
 		// Arrange
 		double dNouveauPrixDefinieParFranchise = 8; 
-		fran.setPrixPlat("Menu Burger", "Burger pour obèse", dNouveauPrixDefinieParFranchise ); // quand la franchise modifie le prix du plat
+		fran.setPrixPlat(sNomMenu, sNomPlat, dNouveauPrixDefinieParFranchise ); // quand la franchise modifie le prix du plat
 		
 		// Assert 
 		// ALORS le prix du plat dans le menu du restaurant est celui défini par la franchise
-		assertEquals(dNouveauPrixDefinieParFranchise, rest.getMenuByName("Menu Burger").getPlatByName("Burger pour obèse").getdPrix());
+		assertEquals(dNouveauPrixDefinieParFranchise, rest.getMenuByName(sNomMenu).getPlatByName(sNomPlat).getdPrix());
 	}
 	
 	/**
@@ -45,10 +47,9 @@ public class test_Menu {
 		String sNomMenuFran, sNomMenuRest, sNomPlat;
 		sNomMenuFran = "Menu du jour";
 		sNomMenuRest = "Menu burger";
-		sNomPlat = "Burger";
-		Restaurant rest = new Restaurant(5); // Etant donne un restaurant 
-		Franchise fran = new Franchise(); 
-		fran.get_aoRestaurants().add(rest); // appartenant à une franchise
+		sNomPlat = "Burger"; 
+		Franchise fran = new Franchise(3,3,1,0.2); 
+		Restaurant rest = fran.get_aoRestaurants().get(0); // Etant donne un restaurant appartenant à une franchise
 		rest.createMenu(sNomMenuRest,sNomPlat, 8); // le restaurant définissant un menu ayant un plat
 		fran.createMenu(sNomMenuFran,sNomPlat, 8);  // la franchise définissant un menu ayant le même plat
 		
@@ -69,9 +70,8 @@ public class test_Menu {
 		String sNomMenu = "Menu bouftou";
 		double dPrixPremierPlat = 12;
 		double dPrixDeuxiemePlat = 10;
-		Restaurant rest = new Restaurant(); // ETANT DONNE un restaurant
-		Franchise fran = new Franchise(); 
-		fran.get_aoRestaurants().add(rest); // appartenant à une franchise
+		Franchise fran = new Franchise(3,3,1,0.2);
+		Restaurant rest = fran.get_aoRestaurants().get(0); // ETANT DONNE un restaurant appartenant à une franchise
 		rest.createMenu(sNomMenu, "Entrecôte", dPrixPremierPlat); // définissant un menu ayant un plat 
 		
 		// Arrange  

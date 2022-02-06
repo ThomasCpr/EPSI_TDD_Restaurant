@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import Utilities.RestaurantGenerator;
+
 public class Franchise {
 	
 	// - - - - - Attributes - - - - - // 
@@ -23,47 +25,15 @@ public class Franchise {
 		_aoMenuFranchise = new ArrayList<Menu>();
 	}
 
-	/**
-	 * Constructeur avec un nombre de restaurant
-	 * @param nombreRestaurants
-	 */
-	public Franchise(int nombreRestaurants) {
-		super();
-		_aoRestaurants = new ArrayList<Restaurant>();
+	public Franchise(int nombreDeRestaurant, int nbTableParRestaurant, int nombreServeur, double dPourcentage) {
 		_aoMenuFranchise = new ArrayList<Menu>();
-		for(int i = 0; i < nombreRestaurants; i++) {
-			_aoRestaurants.add(new Restaurant());
-		}
+		_aoRestaurants = new RestaurantGenerator().Generate(nombreDeRestaurant, nbTableParRestaurant, nombreServeur, dPourcentage);
 	}
-	
-	/**
-	 * Constructeur avec un nombre de restaurant et leur nombre de table pour simplifier le test franchise
-	 * @param nombreRestaurants le nombre de restaurant de la franchise
-	 * @param nbTableParRestaurant le nombre de tables par restaurant
-	 */
-	public Franchise(int nombreRestaurants, int nbTableParRestaurant) {
-		super();
-		_aoRestaurants = new ArrayList<Restaurant>();
-		_aoMenuFranchise = new ArrayList<Menu>();
-		for(int i = 0; i < nombreRestaurants; i++) {
-			_aoRestaurants.add(new Restaurant(nbTableParRestaurant));
-		}
-	}
-	
+
 	// - - - - - GETTERS && SETTERS - - - - - //
 	public ArrayList<Restaurant> get_aoRestaurants() {
 		return _aoRestaurants;
 	}
-	public void set_aoRestaurants(ArrayList<Restaurant> _aoRestaurants) {
-		this._aoRestaurants = _aoRestaurants;
-	}
-	public ArrayList<Menu> get_aoMenuFranchise() {
-		return _aoMenuFranchise;
-	}
-	public void set_aoMenuFranchise(ArrayList<Menu> _aoMenuFranchise) {
-		this._aoMenuFranchise = _aoMenuFranchise;
-	}
-	
 	// - - - - - Methods - - - - - //
 	
 	/**
@@ -83,10 +53,12 @@ public class Franchise {
 	 * @param _sName le nom du menu
 	 */
 	public void createMenu(String _sName,String sNomPlat, double dPrixPlat) {
+		System.out.println("DANS CREATE MENUE");
 		Menu menu = new Menu(_sName,sNomPlat, dPrixPlat);
 		_aoMenuFranchise.add(menu);
 		// ajout au restaurants de la franchise
 		for(Restaurant rest : _aoRestaurants) {
+			System.out.println(rest);
 			rest.get_aoMenuRestaurant().add(menu);
 		}
 	}
@@ -108,9 +80,20 @@ public class Franchise {
 			// NON - on en déduit que le plat est pour les menus des restaurants donc on ne creer pas le menu
 		}
 		// pour chaque restaurants
+		System.out.println("Ajout du plat ("+sNomPlat+","+ dPrix+") la franchise aux restaurants.");
 		for(Restaurant rest: _aoRestaurants) {
+			// Si le menu existe on y ajoute le plat
+			if(rest.getMenuByName(sNomMenu) != null) {
+				rest.getMenuByName(sNomMenu).get_aoPlatsDuMenu().add(new Plat(sNomPlat, dPrix));
+			}
+			else {
+				// sinon on crée le menu
+				rest.createMenu(sNomMenu, sNomPlat, dPrix);
+			}
 			// on ajoute le plat au menu du restaurants
-			rest.getMenuByName(sNomMenu).get_aoPlatsDuMenu().add(new Plat(sNomPlat, dPrix));
+			
+			
+			
 		}
 		
 	}

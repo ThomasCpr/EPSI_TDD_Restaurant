@@ -2,6 +2,9 @@ package Restaurant;
 
 import java.util.ArrayList;
 
+import Utilities.ServeurGenerator;
+import Utilities.TableGenerator;
+
 public class Restaurant {
 	
 	// - - - - - Attributes - - - - - //
@@ -18,21 +21,9 @@ public class Restaurant {
 	
 	// - - - - - Constructors - - - - - //
 	
-	public Restaurant() {
-		_oMaitreHotel = new MaitreHotel();
-		 _aoServeurs = new ArrayList<Serveur>();
-		 _aoTables = new ArrayList<Table>();
-		 _aoMenuRestaurant = new ArrayList<Menu>();
-		 _oCuisine = new Cuisine(this);
-		 _dPourcentageDeDifference = 0.0;
-	}
-	
 	public Restaurant( int nbTable) { 
 		_aoServeurs = new ArrayList<Serveur>();
-		_aoTables = new ArrayList<Table>();
-		for(int j = 0; j<nbTable; j++) {
-			_aoTables.add(new Table());
-		}
+		_aoTables = new TableGenerator().Generate(nbTable);
 		_oMaitreHotel = new MaitreHotel(); // on instancie le MH
 		_oMaitreHotel.assignerTablesCarMaitreHotel(_aoTables); // on lui ajoute automatiquement les tables
 		_aoCommandeATransmettre = new ArrayList<Commande>();
@@ -43,17 +34,11 @@ public class Restaurant {
 	
 	
 	public Restaurant(int nTable, int nServeur, double dPourcentage) {
+		_aoTables = new TableGenerator().Generate(nTable);
 		_oMaitreHotel = new MaitreHotel();
-		 _aoTables = new ArrayList<Table>();
-		 for(int j = 0; j<nTable; j++) {
-				_aoTables.add(new Table());
-		}
 		 _oMaitreHotel.assignerTablesCarMaitreHotel(_aoTables); // on lui ajoute automatiquement les tables
 		 _oCuisine = new Cuisine(this);
-		 _aoServeurs = new ArrayList<Serveur>();
-		 for(int cpt = 0; cpt< nServeur; cpt++) {
-			 recruterServeur(new Serveur());
-		 }
+		 _aoServeurs = new ServeurGenerator().Generate(nServeur,_oCuisine);
 		 _aoMenuRestaurant = new ArrayList<Menu>();
 		 _dPourcentageDeDifference = dPourcentage;
 	}
@@ -64,45 +49,23 @@ public class Restaurant {
 	public ArrayList<Serveur> get_aoServeurs() {
 		return _aoServeurs;
 	}
-	public void set_aoServeurs(ArrayList<Serveur> _aoServeurs) {
-		this._aoServeurs = _aoServeurs;
-	}
 	public MaitreHotel get_oMaitreHotel() {
 		return _oMaitreHotel;
 	}
-	public void set_oMaitreHotel(MaitreHotel _oMaitreHotel) {
-		this._oMaitreHotel = _oMaitreHotel;
-	}
+
 	public ArrayList<Table> get_aoTables() {
 		return _aoTables;
-	}
-	public void set_aoTables(ArrayList<Table> _aoTables) {
-		this._aoTables = _aoTables;
 	}
 	public ArrayList<Commande> get_aoCommandeATransmettre() {
 		return _aoCommandeATransmettre;
 	}
-	public void set_aoCommandeATransmettre(ArrayList<Commande> _aoCommandeATransmettre) {
-		this._aoCommandeATransmettre = _aoCommandeATransmettre;
-	}	
 	public ArrayList<Menu> get_aoMenuRestaurant() {
 		return _aoMenuRestaurant;
-	}
-	public void set_aoMenuRestaurant(ArrayList<Menu> _aoMenuRestaurant) {
-		this._aoMenuRestaurant = _aoMenuRestaurant;
 	}
 	public Cuisine get_oCuisine() {
 		return _oCuisine;
 	}
-	public void set_oCuisine(Cuisine _oCuisine) {
-		this._oCuisine = _oCuisine;
-	}
-	public double get_dPourcentageDeDifference() {
-		return _dPourcentageDeDifference;
-	}
-	public void set_dPourcentageDeDifference(double _dPourcentageDeDifference) {
-		this._dPourcentageDeDifference = _dPourcentageDeDifference;
-	}
+
 
 	// - - - - - METHODS - - - - - //
 	/**
