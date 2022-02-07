@@ -10,7 +10,7 @@ public class Serveur extends Employe {
 	
 	private double _dChiffreAffaire = 0.0;
 	private Cuisine _oCuisine;
-	
+	private String _sNom; // Pour les tests d'intégrations
 	
 	// - - - - - Constructors - - - - - //
 	public Serveur() {
@@ -19,6 +19,13 @@ public class Serveur extends Employe {
 	public Serveur(Cuisine cuisine) {
 		super();
 		_oCuisine = cuisine;
+	}
+	
+	public Serveur(String nom, double CA, Cuisine cuisine) {
+		super();
+		_oCuisine = cuisine;
+		_sNom = nom;
+		_dChiffreAffaire = CA;
 	}
 	
 	// - - - - - GETTERS && SETTERS - - - - - //
