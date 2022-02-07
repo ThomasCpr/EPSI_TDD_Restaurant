@@ -35,3 +35,28 @@ Ex: aoCommandes est une ArrayList<Commande>.
 - d pour double
 - b pour boolean 
 - etc
+
+
+
+* Les itérations 3 et 4 ne contiennent pas les différentes factorisations effectuées lors de l'itération 2.
+
+
+### Installation:
+**Iteration 1,2,3**
+- Necessite Junit: junit-4.10.jar
+
+**Iteration 3**
+- Necessite sqlite -> ajouter au build path le jar suivant: sqlite-jdbc-3;34.0.jar
+
+
+
+**Iteration 4** 
+- npm install dans le dossier API/
+- Surement remplacer le chemin en dur ligne 8 de index.js ...
+## Concernant les tests:
+
+Bien que nous ayons utilisé différentes façons de tester (unitaire, recette, intégration... ) 
+il aurait été intéressant, dans une situation réelle, de réaliser des tests de performances.
+En effet, le sujet étant ici la restauration, l’efficacité d’un service et donc de la prise de commande par un serveur est primordiale. Tester la rapidité des changements de menu, l’envoi d’une commande en cuisine ou encore le refus d’une commande par celle-ci aurait été pertinent.
+
+
